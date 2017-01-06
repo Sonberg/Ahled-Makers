@@ -21,10 +21,15 @@ class InformationTableViewCell: UITableViewCell {
     func updateUI(post : Post) {
         thumbImage.setImageWith("PS", color: .black, circular: false)
         nameLabel.text = post.user
-        dateLabel.text = post.created
+        
         contentLabel.text = post.text
         contentLabel.sizeToFit()
         contentLabel.setNeedsDisplay()
+        
+        // MARK : - Timestamp
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
+        dateLabel.text = timeAgoSince(dateFormatter.date(from: post.created)!)
         
         cardView.backgroundColor = .white
         cardView.layer.cornerRadius = 3.0
