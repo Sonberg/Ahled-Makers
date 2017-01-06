@@ -1,0 +1,583 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		89303B091E0D437400FFDF38 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89303B081E0D437400FFDF38 /* AppDelegate.swift */; };
+		89303B0B1E0D437400FFDF38 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89303B0A1E0D437400FFDF38 /* ViewController.swift */; };
+		89303B0E1E0D437400FFDF38 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89303B0C1E0D437400FFDF38 /* Main.storyboard */; };
+		89303B111E0D437400FFDF38 /* geostigen.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 89303B0F1E0D437400FFDF38 /* geostigen.xcdatamodeld */; };
+		89303B131E0D437400FFDF38 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 89303B121E0D437400FFDF38 /* Assets.xcassets */; };
+		89303B161E0D437400FFDF38 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89303B141E0D437400FFDF38 /* LaunchScreen.storyboard */; };
+		894C69641E1BB6C7001ECB6D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 894C69631E1BB6C7001ECB6D /* GoogleService-Info.plist */; };
+		894C69671E1BB81C001ECB6D /* CardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894C69661E1BB81C001ECB6D /* CardTableViewCell.swift */; };
+		89A639841E1E546300A6CF8A /* Route.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89A639821E1E546300A6CF8A /* Route.storyboard */; };
+		89A639861E1E56C700A6CF8A /* CreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A639851E1E56C700A6CF8A /* CreateViewController.swift */; };
+		89A639881E1E597A00A6CF8A /* ColorListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A639871E1E597A00A6CF8A /* ColorListCell.swift */; };
+		89A6398A1E1E5A1000A6CF8A /* ColorListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 89A639891E1E5A1000A6CF8A /* ColorListCell.xib */; };
+		89A6398C1E1E623700A6CF8A /* ProfileImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A6398B1E1E623700A6CF8A /* ProfileImageCell.swift */; };
+		89A6398F1E1E625800A6CF8A /* ProfileImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 89A6398E1E1E625800A6CF8A /* ProfileImageCell.xib */; };
+		89A639911E1E678E00A6CF8A /* ImageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A639901E1E678E00A6CF8A /* ImageListCell.swift */; };
+		89A639931E1E7E8300A6CF8A /* ImageListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 89A639921E1E7E8300A6CF8A /* ImageListCell.xib */; };
+		89A639951E1E901A00A6CF8A /* Library.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A639941E1E901A00A6CF8A /* Library.swift */; };
+		89A639971E1EB16500A6CF8A /* CreateStopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A639961E1EB16500A6CF8A /* CreateStopViewController.swift */; };
+		89A6399A1E1ED64D00A6CF8A /* MapCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 89A639991E1ED64D00A6CF8A /* MapCell.xib */; };
+		89A6399C1E1ED66B00A6CF8A /* MapCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A6399B1E1ED66B00A6CF8A /* MapCell.swift */; };
+		89A6399E1E1FD15700A6CF8A /* InformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A6399D1E1FD15700A6CF8A /* InformationTableViewCell.swift */; };
+		89A639A01E1FD37500A6CF8A /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A6399F1E1FD37500A6CF8A /* Post.swift */; };
+		89FB788D1E1BC86600CADE1E /* RouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB788C1E1BC86600CADE1E /* RouteViewController.swift */; };
+		89FB78911E1BE3F600CADE1E /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB78901E1BE3F600CADE1E /* Global.swift */; };
+		89FB78941E1BF63B00CADE1E /* StackGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB78921E1BF63B00CADE1E /* StackGrid.swift */; };
+		89FB78951E1BF63B00CADE1E /* StackGrid-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB78931E1BF63B00CADE1E /* StackGrid-Extensions.swift */; };
+		89FB78971E1C049100CADE1E /* LinearProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB78961E1C049100CADE1E /* LinearProgressView.swift */; };
+		89FB789C1E1C131000CADE1E /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB789B1E1C131000CADE1E /* Route.swift */; };
+		89FB789E1E1C131900CADE1E /* Stop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB789D1E1C131900CADE1E /* Stop.swift */; };
+		89FB78A01E1C1CDC00CADE1E /* StopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB789F1E1C1CDC00CADE1E /* StopViewController.swift */; };
+		89FB78A21E1CD8FD00CADE1E /* RouteMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB78A11E1CD8FD00CADE1E /* RouteMapViewController.swift */; };
+		89FB78A41E1CDC9600CADE1E /* RouteNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB78A31E1CDC9600CADE1E /* RouteNavigationViewController.swift */; };
+		89FB78A71E1D504F00CADE1E /* HeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB78A61E1D504F00CADE1E /* HeaderTableViewCell.swift */; };
+		89FB78A91E1D53EC00CADE1E /* AppendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB78A81E1D53EC00CADE1E /* AppendTableViewCell.swift */; };
+		DFBE99982A3C806231969A22 /* Pods_geostigen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BD9FD4D4DC47985FFE01E7F /* Pods_geostigen.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1BD9FD4D4DC47985FFE01E7F /* Pods_geostigen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_geostigen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		77F9E72E08E9063AF60B813B /* Pods-geostigen.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-geostigen.debug.xcconfig"; path = "Pods/Target Support Files/Pods-geostigen/Pods-geostigen.debug.xcconfig"; sourceTree = "<group>"; };
+		89303B051E0D437400FFDF38 /* geostigen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = geostigen.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		89303B081E0D437400FFDF38 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		89303B0A1E0D437400FFDF38 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		89303B0D1E0D437400FFDF38 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		89303B101E0D437400FFDF38 /* geostigen.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = geostigen.xcdatamodel; sourceTree = "<group>"; };
+		89303B121E0D437400FFDF38 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		89303B151E0D437400FFDF38 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		89303B171E0D437400FFDF38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		894C69631E1BB6C7001ECB6D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		894C69661E1BB81C001ECB6D /* CardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardTableViewCell.swift; sourceTree = "<group>"; };
+		89A639831E1E546300A6CF8A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Route.storyboard; sourceTree = "<group>"; };
+		89A639851E1E56C700A6CF8A /* CreateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateViewController.swift; sourceTree = "<group>"; };
+		89A639871E1E597A00A6CF8A /* ColorListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorListCell.swift; sourceTree = "<group>"; };
+		89A639891E1E5A1000A6CF8A /* ColorListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ColorListCell.xib; sourceTree = "<group>"; };
+		89A6398B1E1E623700A6CF8A /* ProfileImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageCell.swift; sourceTree = "<group>"; };
+		89A6398E1E1E625800A6CF8A /* ProfileImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileImageCell.xib; sourceTree = "<group>"; };
+		89A639901E1E678E00A6CF8A /* ImageListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageListCell.swift; sourceTree = "<group>"; };
+		89A639921E1E7E8300A6CF8A /* ImageListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageListCell.xib; sourceTree = "<group>"; };
+		89A639941E1E901A00A6CF8A /* Library.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Library.swift; sourceTree = "<group>"; };
+		89A639961E1EB16500A6CF8A /* CreateStopViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateStopViewController.swift; sourceTree = "<group>"; };
+		89A639991E1ED64D00A6CF8A /* MapCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapCell.xib; sourceTree = "<group>"; };
+		89A6399B1E1ED66B00A6CF8A /* MapCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCell.swift; sourceTree = "<group>"; };
+		89A6399D1E1FD15700A6CF8A /* InformationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationTableViewCell.swift; sourceTree = "<group>"; };
+		89A6399F1E1FD37500A6CF8A /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		89FB788C1E1BC86600CADE1E /* RouteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteViewController.swift; sourceTree = "<group>"; };
+		89FB78901E1BE3F600CADE1E /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
+		89FB78921E1BF63B00CADE1E /* StackGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StackGrid.swift; sourceTree = "<group>"; };
+		89FB78931E1BF63B00CADE1E /* StackGrid-Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StackGrid-Extensions.swift"; sourceTree = "<group>"; };
+		89FB78961E1C049100CADE1E /* LinearProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinearProgressView.swift; sourceTree = "<group>"; };
+		89FB789B1E1C131000CADE1E /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
+		89FB789D1E1C131900CADE1E /* Stop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stop.swift; sourceTree = "<group>"; };
+		89FB789F1E1C1CDC00CADE1E /* StopViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StopViewController.swift; sourceTree = "<group>"; };
+		89FB78A11E1CD8FD00CADE1E /* RouteMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteMapViewController.swift; sourceTree = "<group>"; };
+		89FB78A31E1CDC9600CADE1E /* RouteNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteNavigationViewController.swift; sourceTree = "<group>"; };
+		89FB78A61E1D504F00CADE1E /* HeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderTableViewCell.swift; sourceTree = "<group>"; };
+		89FB78A81E1D53EC00CADE1E /* AppendTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppendTableViewCell.swift; sourceTree = "<group>"; };
+		AB04329752C2352EF75C8B83 /* Pods-geostigen.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-geostigen.release.xcconfig"; path = "Pods/Target Support Files/Pods-geostigen/Pods-geostigen.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		89303B021E0D437300FFDF38 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DFBE99982A3C806231969A22 /* Pods_geostigen.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4D7ECBD5EC10BCAF115149C7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1BD9FD4D4DC47985FFE01E7F /* Pods_geostigen.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		89303AFC1E0D437300FFDF38 = {
+			isa = PBXGroup;
+			children = (
+				89303B071E0D437400FFDF38 /* geostigen */,
+				89303B061E0D437400FFDF38 /* Products */,
+				E2AEDC92B7007AB10AA9391B /* Pods */,
+				4D7ECBD5EC10BCAF115149C7 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		89303B061E0D437400FFDF38 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				89303B051E0D437400FFDF38 /* geostigen.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		89303B071E0D437400FFDF38 /* geostigen */ = {
+			isa = PBXGroup;
+			children = (
+				89303B081E0D437400FFDF38 /* AppDelegate.swift */,
+				894C69651E1BB80A001ECB6D /* Cell */,
+				89FB78991E1C12DF00CADE1E /* Controllers */,
+				89FB789A1E1C12F500CADE1E /* Helpers */,
+				89FB78981E1C12CA00CADE1E /* Models */,
+				89303B0C1E0D437400FFDF38 /* Main.storyboard */,
+				89A639821E1E546300A6CF8A /* Route.storyboard */,
+				89303B121E0D437400FFDF38 /* Assets.xcassets */,
+				89303B141E0D437400FFDF38 /* LaunchScreen.storyboard */,
+				89303B171E0D437400FFDF38 /* Info.plist */,
+				89303B0F1E0D437400FFDF38 /* geostigen.xcdatamodeld */,
+				894C69631E1BB6C7001ECB6D /* GoogleService-Info.plist */,
+				89A639941E1E901A00A6CF8A /* Library.swift */,
+			);
+			path = geostigen;
+			sourceTree = "<group>";
+		};
+		894C69651E1BB80A001ECB6D /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				89A6398D1E1E623F00A6CF8A /* Create Form */,
+				89FB78A51E1D503700CADE1E /* Stop */,
+				894C69661E1BB81C001ECB6D /* CardTableViewCell.swift */,
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
+		89A6398D1E1E623F00A6CF8A /* Create Form */ = {
+			isa = PBXGroup;
+			children = (
+				89A639871E1E597A00A6CF8A /* ColorListCell.swift */,
+				89A639901E1E678E00A6CF8A /* ImageListCell.swift */,
+				89A639891E1E5A1000A6CF8A /* ColorListCell.xib */,
+				89A639921E1E7E8300A6CF8A /* ImageListCell.xib */,
+				89A6398B1E1E623700A6CF8A /* ProfileImageCell.swift */,
+				89A6398E1E1E625800A6CF8A /* ProfileImageCell.xib */,
+			);
+			name = "Create Form";
+			sourceTree = "<group>";
+		};
+		89A639981E1ED62B00A6CF8A /* Form */ = {
+			isa = PBXGroup;
+			children = (
+				89A639991E1ED64D00A6CF8A /* MapCell.xib */,
+				89A6399B1E1ED66B00A6CF8A /* MapCell.swift */,
+			);
+			name = Form;
+			sourceTree = "<group>";
+		};
+		89FB78981E1C12CA00CADE1E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				89FB789B1E1C131000CADE1E /* Route.swift */,
+				89FB789D1E1C131900CADE1E /* Stop.swift */,
+				89A6399F1E1FD37500A6CF8A /* Post.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		89FB78991E1C12DF00CADE1E /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				89303B0A1E0D437400FFDF38 /* ViewController.swift */,
+				89FB78A31E1CDC9600CADE1E /* RouteNavigationViewController.swift */,
+				89FB788C1E1BC86600CADE1E /* RouteViewController.swift */,
+				89FB78A11E1CD8FD00CADE1E /* RouteMapViewController.swift */,
+				89FB789F1E1C1CDC00CADE1E /* StopViewController.swift */,
+				89A639851E1E56C700A6CF8A /* CreateViewController.swift */,
+				89A639961E1EB16500A6CF8A /* CreateStopViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		89FB789A1E1C12F500CADE1E /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				89FB78961E1C049100CADE1E /* LinearProgressView.swift */,
+				89FB78921E1BF63B00CADE1E /* StackGrid.swift */,
+				89FB78931E1BF63B00CADE1E /* StackGrid-Extensions.swift */,
+				89FB78901E1BE3F600CADE1E /* Global.swift */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
+		89FB78A51E1D503700CADE1E /* Stop */ = {
+			isa = PBXGroup;
+			children = (
+				89A639981E1ED62B00A6CF8A /* Form */,
+				89FB78A61E1D504F00CADE1E /* HeaderTableViewCell.swift */,
+				89FB78A81E1D53EC00CADE1E /* AppendTableViewCell.swift */,
+				89A6399D1E1FD15700A6CF8A /* InformationTableViewCell.swift */,
+			);
+			name = Stop;
+			sourceTree = "<group>";
+		};
+		E2AEDC92B7007AB10AA9391B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				77F9E72E08E9063AF60B813B /* Pods-geostigen.debug.xcconfig */,
+				AB04329752C2352EF75C8B83 /* Pods-geostigen.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		89303B041E0D437300FFDF38 /* geostigen */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 89303B1A1E0D437400FFDF38 /* Build configuration list for PBXNativeTarget "geostigen" */;
+			buildPhases = (
+				1ECFF11FF55D52A0E78EAAAD /* [CP] Check Pods Manifest.lock */,
+				89303B011E0D437300FFDF38 /* Sources */,
+				89303B021E0D437300FFDF38 /* Frameworks */,
+				89303B031E0D437300FFDF38 /* Resources */,
+				042100D0F64540A5B1E15EE5 /* [CP] Embed Pods Frameworks */,
+				038BA659906C940BA12F8B7A /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = geostigen;
+			productName = geostigen;
+			productReference = 89303B051E0D437400FFDF38 /* geostigen.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		89303AFD1E0D437300FFDF38 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0820;
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "Per Sonberg";
+				TargetAttributes = {
+					89303B041E0D437300FFDF38 = {
+						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = K4643C7U42;
+						LastSwiftMigration = 0820;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 89303B001E0D437300FFDF38 /* Build configuration list for PBXProject "geostigen" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 89303AFC1E0D437300FFDF38;
+			productRefGroup = 89303B061E0D437400FFDF38 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				89303B041E0D437300FFDF38 /* geostigen */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		89303B031E0D437300FFDF38 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89303B161E0D437400FFDF38 /* LaunchScreen.storyboard in Resources */,
+				89A639931E1E7E8300A6CF8A /* ImageListCell.xib in Resources */,
+				89A639841E1E546300A6CF8A /* Route.storyboard in Resources */,
+				89303B131E0D437400FFDF38 /* Assets.xcassets in Resources */,
+				89A6398F1E1E625800A6CF8A /* ProfileImageCell.xib in Resources */,
+				89303B0E1E0D437400FFDF38 /* Main.storyboard in Resources */,
+				894C69641E1BB6C7001ECB6D /* GoogleService-Info.plist in Resources */,
+				89A6398A1E1E5A1000A6CF8A /* ColorListCell.xib in Resources */,
+				89A6399A1E1ED64D00A6CF8A /* MapCell.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		038BA659906C940BA12F8B7A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-geostigen/Pods-geostigen-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		042100D0F64540A5B1E15EE5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-geostigen/Pods-geostigen-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		1ECFF11FF55D52A0E78EAAAD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		89303B011E0D437300FFDF38 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89A6399C1E1ED66B00A6CF8A /* MapCell.swift in Sources */,
+				89FB78A41E1CDC9600CADE1E /* RouteNavigationViewController.swift in Sources */,
+				89A639911E1E678E00A6CF8A /* ImageListCell.swift in Sources */,
+				89A639881E1E597A00A6CF8A /* ColorListCell.swift in Sources */,
+				89FB78A71E1D504F00CADE1E /* HeaderTableViewCell.swift in Sources */,
+				89FB78A01E1C1CDC00CADE1E /* StopViewController.swift in Sources */,
+				89A639861E1E56C700A6CF8A /* CreateViewController.swift in Sources */,
+				89303B0B1E0D437400FFDF38 /* ViewController.swift in Sources */,
+				89FB78A21E1CD8FD00CADE1E /* RouteMapViewController.swift in Sources */,
+				89A639A01E1FD37500A6CF8A /* Post.swift in Sources */,
+				89A639951E1E901A00A6CF8A /* Library.swift in Sources */,
+				89303B111E0D437400FFDF38 /* geostigen.xcdatamodeld in Sources */,
+				89FB788D1E1BC86600CADE1E /* RouteViewController.swift in Sources */,
+				89FB789C1E1C131000CADE1E /* Route.swift in Sources */,
+				89A639971E1EB16500A6CF8A /* CreateStopViewController.swift in Sources */,
+				89303B091E0D437400FFDF38 /* AppDelegate.swift in Sources */,
+				894C69671E1BB81C001ECB6D /* CardTableViewCell.swift in Sources */,
+				89FB78941E1BF63B00CADE1E /* StackGrid.swift in Sources */,
+				89FB789E1E1C131900CADE1E /* Stop.swift in Sources */,
+				89A6399E1E1FD15700A6CF8A /* InformationTableViewCell.swift in Sources */,
+				89FB78971E1C049100CADE1E /* LinearProgressView.swift in Sources */,
+				89FB78951E1BF63B00CADE1E /* StackGrid-Extensions.swift in Sources */,
+				89A6398C1E1E623700A6CF8A /* ProfileImageCell.swift in Sources */,
+				89FB78911E1BE3F600CADE1E /* Global.swift in Sources */,
+				89FB78A91E1D53EC00CADE1E /* AppendTableViewCell.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		89303B0C1E0D437400FFDF38 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				89303B0D1E0D437400FFDF38 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		89303B141E0D437400FFDF38 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				89303B151E0D437400FFDF38 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		89A639821E1E546300A6CF8A /* Route.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				89A639831E1E546300A6CF8A /* Base */,
+			);
+			name = Route.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		89303B181E0D437400FFDF38 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		89303B191E0D437400FFDF38 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		89303B1B1E0D437400FFDF38 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 77F9E72E08E9063AF60B813B /* Pods-geostigen.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = K4643C7U42;
+				INFOPLIST_FILE = geostigen/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = personberg.geostigen;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		89303B1C1E0D437400FFDF38 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB04329752C2352EF75C8B83 /* Pods-geostigen.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = K4643C7U42;
+				INFOPLIST_FILE = geostigen/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = personberg.geostigen;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		89303B001E0D437300FFDF38 /* Build configuration list for PBXProject "geostigen" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				89303B181E0D437400FFDF38 /* Debug */,
+				89303B191E0D437400FFDF38 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		89303B1A1E0D437400FFDF38 /* Build configuration list for PBXNativeTarget "geostigen" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				89303B1B1E0D437400FFDF38 /* Debug */,
+				89303B1C1E0D437400FFDF38 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		89303B0F1E0D437400FFDF38 /* geostigen.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				89303B101E0D437400FFDF38 /* geostigen.xcdatamodel */,
+			);
+			currentVersion = 89303B101E0D437400FFDF38 /* geostigen.xcdatamodel */;
+			path = geostigen.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 89303AFD1E0D437300FFDF38 /* Project object */;
+}
