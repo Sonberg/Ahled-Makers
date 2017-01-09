@@ -30,6 +30,8 @@
 	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Need access to photos</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Show location on map</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

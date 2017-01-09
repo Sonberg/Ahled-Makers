@@ -22,6 +22,7 @@ class CreateStopViewController: FormViewController {
     // MARK : - Actions
     func didTouchSave(_ sender : Any) {
         self.stop.save(parentId: self.route.id)
+        self.route.updateCenter()
         self.navigationController?.popViewController(animated: true)
     }
     

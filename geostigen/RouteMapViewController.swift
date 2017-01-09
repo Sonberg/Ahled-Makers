@@ -74,10 +74,12 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
         if self.routeViewController != nil {
             self.routeViewController?.closeButton?.setStyle(DynamicButtonStyle.close, animated: true)
         }
-        
 
-        self.mapView.showAnnotations(self.mapView.annotations, animated: true)
-
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        locationManager.stopUpdatingLocation()
     }
 
     
@@ -262,15 +264,13 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
     
     // MARK : - Location
     func location() {
+        print("location")
         locationManager = CLLocationManager()
-        self.locationManager.requestAlwaysAuthorization()
-        self.locationManager.requestWhenInUseAuthorization()
-        
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = self
-            locationManager.distanceFilter = kCLLocationAccuracyNearestTenMeters;
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-        }
+        locationManager.requestAlwaysAuthorization()
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.delegate = self
+        locationManager.distanceFilter = kCLLocationAccuracyNearestTenMeters;
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest;
         checkMapPositionPremission()
     }
     
@@ -298,6 +298,20 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
             // 3. we do have authorization
         else if CLLocationManager.authorizationStatus() == .authorizedAlways {
             locationManager.startUpdatingLocation()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == CLAuthorizationStatus.authorizedWhenInUse {
+            locationManager.startUpdatingLocation()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if locations.last != nil {
+            mapView.showAnnotations(self.mapView.annotations, animated: true)
+            locationManager.startUpdatingLocation()
+            
         }
     }
     

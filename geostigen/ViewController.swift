@@ -9,15 +9,18 @@
 import UIKit
 import Presentr
 import SideMenu
+import CoreLocation
 import FirebaseDatabase
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
     
     // MARK: - Outlets
     @IBOutlet weak var tableView: UITableView!
     
     
     // MARK: - Variables
+    var locationManager : CLLocationManager!
+    var location : CLLocation?
     var routes : [Route] = []
     let images : [UIImage] = [#imageLiteral(resourceName: "earyikg21d4-maja-petric"), #imageLiteral(resourceName: "xn_crzwxgdm-andreas-p"), #imageLiteral(resourceName: "rbthqzjd_vu-thaddaeus-lim"), #imageLiteral(resourceName: "jktv__bqmaa-brooke-lark"), #imageLiteral(resourceName: "u_nsisvpeak-christian-joudrey")]
     
@@ -35,7 +38,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
-        self.syncFirebase()
+        syncFirebase()
+        setupLocation()
     }
     
     // MARK : - Firebase
@@ -68,6 +72,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
+    // MARK : - Location
+    func setupLocation() {
+        locationManager = CLLocationManager()
+        locationManager.requestAlwaysAuthorization()
+        locationManager.requestWhenInUseAuthorization()
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        self.location = locations.last
+        self.tableView.reloadData()
+        print("reloafing")
+    }
     
     // MARK : - TableView
     
@@ -86,7 +107,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             return "Stigar i närheten"
         }
         
-        return "Påbörjade stigar"
+        return "Dina stigar"
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -95,7 +116,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell : CardTableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CardTableViewCell
-        cell.updateUI(route : self.routes[indexPath.row])
+        cell.updateUI(route : self.routes[indexPath.row], location : self.location)
         return cell
     }
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

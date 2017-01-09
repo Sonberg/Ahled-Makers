@@ -57,12 +57,20 @@ struct Stop {
         } else {
             ref = FIRDatabase.database().reference().child("routes").child(parentId).child("stops").childByAutoId()
         }
-        ref.setValue([
+        
+        let data : [String : Any] = [
             "name" : self.name,
             "desc" : self.desc,
             "lat" : self.lat,
             "long" : self.long
-            ])
+        ]
+        
+        if self.id.characters.count > 0 {
+            ref.updateChildValues(data)
+        } else {
+            ref.setValue(data)
+        }
+        
     }
     
     func delete(parentId : String) {
