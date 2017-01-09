@@ -15,6 +15,11 @@
 		89303B161E0D437400FFDF38 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89303B141E0D437400FFDF38 /* LaunchScreen.storyboard */; };
 		894C69641E1BB6C7001ECB6D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 894C69631E1BB6C7001ECB6D /* GoogleService-Info.plist */; };
 		894C69671E1BB81C001ECB6D /* CardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894C69661E1BB81C001ECB6D /* CardTableViewCell.swift */; };
+		8975E34A1E23DD2B007B1E2F /* Auth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8975E3491E23DD2B007B1E2F /* Auth.storyboard */; };
+		8975E34C1E23DD36007B1E2F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8975E34B1E23DD36007B1E2F /* LoginViewController.swift */; };
+		8975E34E1E23DD62007B1E2F /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8975E34D1E23DD62007B1E2F /* SignupViewController.swift */; };
+		8975E3501E23DF02007B1E2F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8975E34F1E23DF02007B1E2F /* User.swift */; };
+		8975E3521E23E132007B1E2F /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8975E3511E23E132007B1E2F /* Enum.swift */; };
 		89A639841E1E546300A6CF8A /* Route.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89A639821E1E546300A6CF8A /* Route.storyboard */; };
 		89A639861E1E56C700A6CF8A /* CreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A639851E1E56C700A6CF8A /* CreateViewController.swift */; };
 		89A639881E1E597A00A6CF8A /* ColorListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A639871E1E597A00A6CF8A /* ColorListCell.swift */; };
@@ -58,6 +63,11 @@
 		89303B171E0D437400FFDF38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		894C69631E1BB6C7001ECB6D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		894C69661E1BB81C001ECB6D /* CardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardTableViewCell.swift; sourceTree = "<group>"; };
+		8975E3491E23DD2B007B1E2F /* Auth.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Auth.storyboard; sourceTree = "<group>"; };
+		8975E34B1E23DD36007B1E2F /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		8975E34D1E23DD62007B1E2F /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
+		8975E34F1E23DF02007B1E2F /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		8975E3511E23E132007B1E2F /* Enum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
 		89A639831E1E546300A6CF8A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Route.storyboard; sourceTree = "<group>"; };
 		89A639851E1E56C700A6CF8A /* CreateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateViewController.swift; sourceTree = "<group>"; };
 		89A639871E1E597A00A6CF8A /* ColorListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorListCell.swift; sourceTree = "<group>"; };
@@ -135,6 +145,7 @@
 				89FB789A1E1C12F500CADE1E /* Helpers */,
 				89FB78981E1C12CA00CADE1E /* Models */,
 				89303B0C1E0D437400FFDF38 /* Main.storyboard */,
+				8975E3491E23DD2B007B1E2F /* Auth.storyboard */,
 				89A639821E1E546300A6CF8A /* Route.storyboard */,
 				89303B121E0D437400FFDF38 /* Assets.xcassets */,
 				89303B141E0D437400FFDF38 /* LaunchScreen.storyboard */,
@@ -181,6 +192,7 @@
 		89FB78981E1C12CA00CADE1E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				8975E34F1E23DF02007B1E2F /* User.swift */,
 				89FB789B1E1C131000CADE1E /* Route.swift */,
 				89FB789D1E1C131900CADE1E /* Stop.swift */,
 				89A6399F1E1FD37500A6CF8A /* Post.swift */,
@@ -191,6 +203,8 @@
 		89FB78991E1C12DF00CADE1E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				8975E34B1E23DD36007B1E2F /* LoginViewController.swift */,
+				8975E34D1E23DD62007B1E2F /* SignupViewController.swift */,
 				89303B0A1E0D437400FFDF38 /* ViewController.swift */,
 				89FB78A31E1CDC9600CADE1E /* RouteNavigationViewController.swift */,
 				89FB788C1E1BC86600CADE1E /* RouteViewController.swift */,
@@ -210,6 +224,7 @@
 				89FB78931E1BF63B00CADE1E /* StackGrid-Extensions.swift */,
 				89FB78901E1BE3F600CADE1E /* Global.swift */,
 				89A639A11E1FF96000A6CF8A /* TimeAgo.swift */,
+				8975E3511E23E132007B1E2F /* Enum.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -300,6 +315,7 @@
 			files = (
 				89303B161E0D437400FFDF38 /* LaunchScreen.storyboard in Resources */,
 				89A639931E1E7E8300A6CF8A /* ImageListCell.xib in Resources */,
+				8975E34A1E23DD2B007B1E2F /* Auth.storyboard in Resources */,
 				89A639841E1E546300A6CF8A /* Route.storyboard in Resources */,
 				89303B131E0D437400FFDF38 /* Assets.xcassets in Resources */,
 				89A6398F1E1E625800A6CF8A /* ProfileImageCell.xib in Resources */,
@@ -365,6 +381,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8975E34C1E23DD36007B1E2F /* LoginViewController.swift in Sources */,
 				89A6399C1E1ED66B00A6CF8A /* MapCell.swift in Sources */,
 				89FB78A41E1CDC9600CADE1E /* RouteNavigationViewController.swift in Sources */,
 				89A639911E1E678E00A6CF8A /* ImageListCell.swift in Sources */,
@@ -372,6 +389,8 @@
 				89FB78A71E1D504F00CADE1E /* HeaderTableViewCell.swift in Sources */,
 				89FB78A01E1C1CDC00CADE1E /* StopViewController.swift in Sources */,
 				89A639861E1E56C700A6CF8A /* CreateViewController.swift in Sources */,
+				8975E3521E23E132007B1E2F /* Enum.swift in Sources */,
+				8975E3501E23DF02007B1E2F /* User.swift in Sources */,
 				89303B0B1E0D437400FFDF38 /* ViewController.swift in Sources */,
 				89FB78A21E1CD8FD00CADE1E /* RouteMapViewController.swift in Sources */,
 				89A639A01E1FD37500A6CF8A /* Post.swift in Sources */,
@@ -386,6 +405,7 @@
 				89FB789E1E1C131900CADE1E /* Stop.swift in Sources */,
 				89A6399E1E1FD15700A6CF8A /* InformationTableViewCell.swift in Sources */,
 				89FB78971E1C049100CADE1E /* LinearProgressView.swift in Sources */,
+				8975E34E1E23DD62007B1E2F /* SignupViewController.swift in Sources */,
 				89FB78951E1BF63B00CADE1E /* StackGrid-Extensions.swift in Sources */,
 				89A639A21E1FF96000A6CF8A /* TimeAgo.swift in Sources */,
 				89A6398C1E1E623700A6CF8A /* ProfileImageCell.swift in Sources */,

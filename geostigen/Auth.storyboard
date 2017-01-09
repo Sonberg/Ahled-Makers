@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="n6u-bb-Ond">
+    <device id="ipad9_7" orientation="landscape">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Login View Controller-->
+        <scene sceneID="utu-gE-x8i">
+            <objects>
+                <viewController modalTransitionStyle="flipHorizontal" id="n6u-bb-Ond" customClass="LoginViewController" customModule="geostigen" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="TW5-gj-dHO"/>
+                        <viewControllerLayoutGuide type="bottom" id="wVh-Xh-MEF"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Wz5-rt-D1c">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QyV-fP-x4t">
+                                <rect key="frame" x="257" y="297" width="510" height="175"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="E-postadress" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GXE-0B-RU4">
+                                        <rect key="frame" x="55" y="8" width="400" height="22"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="22" id="jq2-ii-UEp"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Lösenord" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HxU-O2-OQn">
+                                        <rect key="frame" x="55" y="37" width="400" height="22"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="22" id="vqO-MQ-phM"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                                <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                                <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                                <color key="value" red="0.43921568630000002" green="0.56862745100000001" blue="0.63921568630000003" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="errorColor">
+                                                <color key="value" red="0.97646335660000005" green="0.41457453570000002" blue="0.49717574679999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="selectedLineColor">
+                                                <color key="value" red="0.68201954441750368" green="0.85547961818411278" blue="0.89780298223350252" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="selectedTitleColor">
+                                                <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Lösenord"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="selectedTitle" value="Lösenord"/>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="titleColor">
+                                                <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </textField>
+                                    <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fbt-w6-N9J">
+                                        <rect key="frame" x="55" y="67" width="400" height="33"/>
+                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                        <color key="tintColor" red="1" green="0.57723608729999998" blue="0.37178765029999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <size key="titleShadowOffset" width="0.0" height="6"/>
+                                        <state key="normal" title="Logga in">
+                                            <color key="titleColor" red="0.98693798919587994" green="1" blue="0.9990093154493267" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="didTouchLogin:" destination="n6u-bb-Ond" eventType="touchUpInside" id="wfE-Dv-R2Y"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ogb-tf-dkF">
+                                        <rect key="frame" x="55" y="107" width="400" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="32" id="3S5-Fc-a8f"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                        <state key="normal" title="Skapa konto">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" red="0.89302601989399821" green="0.90186786167512689" blue="0.90186786167512689" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="2wh-hG-rre" kind="presentation" id="tcI-31-3Py"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="35U-Iz-hub">
+                                        <rect key="frame" x="55" y="147" width="400" height="28"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="28" id="eet-yL-fBx"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                        <state key="normal" title="Glömt lösenord?">
+                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" red="0.89302601989399821" green="0.90186786167512689" blue="0.90186786167512689" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="ogb-tf-dkF" firstAttribute="top" secondItem="fbt-w6-N9J" secondAttribute="bottom" constant="7" id="0qg-4F-B4d"/>
+                                    <constraint firstItem="HxU-O2-OQn" firstAttribute="leading" secondItem="fbt-w6-N9J" secondAttribute="leading" id="3c5-fU-eZs"/>
+                                    <constraint firstItem="HxU-O2-OQn" firstAttribute="top" secondItem="GXE-0B-RU4" secondAttribute="bottom" constant="7" id="Asg-Um-hfZ"/>
+                                    <constraint firstItem="GXE-0B-RU4" firstAttribute="leading" secondItem="QyV-fP-x4t" secondAttribute="leading" constant="55" id="Bv7-x0-pnd"/>
+                                    <constraint firstItem="GXE-0B-RU4" firstAttribute="trailing" secondItem="HxU-O2-OQn" secondAttribute="trailing" id="Cn8-SF-Vn4"/>
+                                    <constraint firstAttribute="bottom" secondItem="35U-Iz-hub" secondAttribute="bottom" id="Ejl-jI-zO7"/>
+                                    <constraint firstItem="GXE-0B-RU4" firstAttribute="leading" secondItem="HxU-O2-OQn" secondAttribute="leading" id="GAG-Wm-IdQ"/>
+                                    <constraint firstItem="GXE-0B-RU4" firstAttribute="top" secondItem="QyV-fP-x4t" secondAttribute="topMargin" id="K9e-FL-Vlj"/>
+                                    <constraint firstItem="HxU-O2-OQn" firstAttribute="trailing" secondItem="fbt-w6-N9J" secondAttribute="trailing" id="O1O-Ea-xeg"/>
+                                    <constraint firstItem="fbt-w6-N9J" firstAttribute="trailing" secondItem="ogb-tf-dkF" secondAttribute="trailing" id="Qml-mN-0K1"/>
+                                    <constraint firstItem="ogb-tf-dkF" firstAttribute="leading" secondItem="35U-Iz-hub" secondAttribute="leading" id="eS7-v0-2dk"/>
+                                    <constraint firstItem="fbt-w6-N9J" firstAttribute="leading" secondItem="ogb-tf-dkF" secondAttribute="leading" id="fEp-Oa-23H"/>
+                                    <constraint firstItem="ogb-tf-dkF" firstAttribute="trailing" secondItem="35U-Iz-hub" secondAttribute="trailing" id="inn-A7-hyw"/>
+                                    <constraint firstItem="GXE-0B-RU4" firstAttribute="centerX" secondItem="QyV-fP-x4t" secondAttribute="centerX" id="mZP-J9-202"/>
+                                    <constraint firstItem="fbt-w6-N9J" firstAttribute="top" secondItem="HxU-O2-OQn" secondAttribute="bottom" constant="8" symbolic="YES" id="sJs-qj-NCk"/>
+                                    <constraint firstItem="35U-Iz-hub" firstAttribute="top" secondItem="ogb-tf-dkF" secondAttribute="bottom" constant="8" symbolic="YES" id="za4-PC-HKT"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="QyV-fP-x4t" firstAttribute="centerX" secondItem="Wz5-rt-D1c" secondAttribute="centerX" id="Oxi-Qw-A6Y"/>
+                            <constraint firstItem="QyV-fP-x4t" firstAttribute="leading" secondItem="Wz5-rt-D1c" secondAttribute="leading" constant="257" id="PcM-Iu-EfP"/>
+                            <constraint firstItem="QyV-fP-x4t" firstAttribute="top" secondItem="TW5-gj-dHO" secondAttribute="bottom" constant="277" id="e13-fH-Gy1"/>
+                            <constraint firstItem="QyV-fP-x4t" firstAttribute="centerY" secondItem="Wz5-rt-D1c" secondAttribute="centerY" id="sQK-4X-lrK"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="email" destination="GXE-0B-RU4" id="kIM-I6-EC6"/>
+                        <outlet property="loginButton" destination="fbt-w6-N9J" id="itK-Fa-IBN"/>
+                        <outlet property="password" destination="HxU-O2-OQn" id="qgz-sV-cb4"/>
+                        <segue destination="A3e-Mj-mFj" kind="presentation" identifier="loginSegue" modalTransitionStyle="crossDissolve" id="xJ7-dd-0YY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uxW-W2-96L" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-449.99999999999994" y="-281.25"/>
+        </scene>
+        <!--Signup View Controller-->
+        <scene sceneID="tAh-cA-ORm">
+            <objects>
+                <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="currentContext" id="2wh-hG-rre" customClass="SignupViewController" customModule="geostigen" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="mHd-Pa-Ewb"/>
+                        <viewControllerLayoutGuide type="bottom" id="zqx-8d-N0Q"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Yie-VL-WGC">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AA5-eo-o76">
+                                <rect key="frame" x="20" y="28" width="75" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="75" id="els-zn-1Yt"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                <state key="normal" title="Tillbaka">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="didTouchCancel:" destination="2wh-hG-rre" eventType="touchUpInside" id="LyB-y8-4uP"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Skapa ett konto" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ljk-kd-To9">
+                                <rect key="frame" x="88" y="201" width="200" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="Wgf-DK-o6s"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="28"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TcH-g6-FFe" customClass="SpringButton" customModule="geostigen" customModuleProvider="target">
+                                <rect key="frame" x="49" y="249" width="277" height="169"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Efternamn" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3ck-Il-3yK">
+                                        <rect key="frame" x="0.0" y="38" width="277" height="24"/>
+                                        <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="277" id="RRV-MZ-jhf"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                                <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                                <color key="value" red="0.96078431369999995" green="0.96862745100000003" blue="0.98431372549999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                                <color key="value" red="0.16078431369999999" green="0.29411764709999999" blue="0.37254901959999998" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="errorColor">
+                                                <color key="value" red="0.97646335660000005" green="0.41457453570000002" blue="0.49717574679999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="selectedTitleColor">
+                                                <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="selectedLineColor">
+                                                <color key="value" red="0.58429966840000003" green="0.72979584460000002" blue="0.76239292510000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Lösenord" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="itg-Oj-Ypu">
+                                        <rect key="frame" x="0.0" y="102" width="277" height="24"/>
+                                        <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="277" id="QqQ-CB-1bu"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                                <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                                <color key="value" red="0.96078431369999995" green="0.96862745100000003" blue="0.98431372549999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                                <color key="value" red="0.16078431369999999" green="0.29411764709999999" blue="0.37254901959999998" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="errorColor">
+                                                <color key="value" red="0.97646335660000005" green="0.41457453570000002" blue="0.49717574679999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="selectedTitleColor">
+                                                <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="selectedLineColor">
+                                                <color key="value" red="0.58429966840000003" green="0.72979584460000002" blue="0.76239292510000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Förnamn" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="F95-xL-os8">
+                                        <rect key="frame" x="0.0" y="6" width="277" height="24"/>
+                                        <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                                <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                                <color key="value" red="0.96078431369999995" green="0.96862745100000003" blue="0.98431372549999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                                <color key="value" red="0.16078431369999999" green="0.29411764709999999" blue="0.37254901959999998" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="errorColor">
+                                                <color key="value" red="0.97646335660000005" green="0.41457453570000002" blue="0.49717574679999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="selectedTitleColor">
+                                                <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="selectedLineColor">
+                                                <color key="value" red="0.58429966840000003" green="0.72979584460000002" blue="0.76239292510000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </textField>
+                                    <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yKa-Xv-EBr">
+                                        <rect key="frame" x="0.0" y="160" width="277" height="36"/>
+                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="277" id="knI-9l-phq"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                        <color key="tintColor" red="1" green="0.57723608729999998" blue="0.37178765029999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="Skapa konto">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="didTouchSignup:" destination="2wh-hG-rre" eventType="touchUpInside" id="y4i-D9-caH"/>
+                                        </connections>
+                                    </button>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="E-postadress" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EKZ-tG-Juk">
+                                        <rect key="frame" x="0.0" y="70" width="277" height="24"/>
+                                        <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="277" id="CvD-tQ-esZ"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                                <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                                <color key="value" red="0.96078431369999995" green="0.96862745100000003" blue="0.98431372549999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                                <color key="value" red="0.16078431369999999" green="0.29411764709999999" blue="0.37254901959999998" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="errorColor">
+                                                <color key="value" red="0.97646335660000005" green="0.41457453570000002" blue="0.49717574679999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="selectedTitleColor">
+                                                <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="selectedLineColor">
+                                                <color key="value" red="0.58429966840000003" green="0.72979584460000002" blue="0.76239292510000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="277" id="4Ay-NZ-B5t"/>
+                                    <constraint firstItem="F95-xL-os8" firstAttribute="top" secondItem="TcH-g6-FFe" secondAttribute="top" constant="6" id="5yu-2b-c1w"/>
+                                    <constraint firstItem="F95-xL-os8" firstAttribute="leading" secondItem="3ck-Il-3yK" secondAttribute="leading" id="72r-x7-SvC"/>
+                                    <constraint firstAttribute="trailing" secondItem="F95-xL-os8" secondAttribute="trailing" id="8hy-uh-LOM"/>
+                                    <constraint firstItem="itg-Oj-Ypu" firstAttribute="trailing" secondItem="yKa-Xv-EBr" secondAttribute="trailing" id="ACu-fs-aZl"/>
+                                    <constraint firstItem="EKZ-tG-Juk" firstAttribute="top" secondItem="3ck-Il-3yK" secondAttribute="bottom" constant="8" symbolic="YES" id="LCr-xO-WVf"/>
+                                    <constraint firstItem="F95-xL-os8" firstAttribute="leading" secondItem="TcH-g6-FFe" secondAttribute="leading" id="RlS-8e-Rbp"/>
+                                    <constraint firstItem="3ck-Il-3yK" firstAttribute="leading" secondItem="EKZ-tG-Juk" secondAttribute="leading" id="STi-CU-Q7R"/>
+                                    <constraint firstItem="EKZ-tG-Juk" firstAttribute="leading" secondItem="itg-Oj-Ypu" secondAttribute="leading" id="eyy-Zw-qkR"/>
+                                    <constraint firstItem="yKa-Xv-EBr" firstAttribute="top" secondItem="itg-Oj-Ypu" secondAttribute="bottom" constant="34" id="oGI-OJ-dF9"/>
+                                    <constraint firstItem="itg-Oj-Ypu" firstAttribute="leading" secondItem="yKa-Xv-EBr" secondAttribute="leading" id="sD0-h2-Kcc"/>
+                                    <constraint firstItem="3ck-Il-3yK" firstAttribute="top" secondItem="F95-xL-os8" secondAttribute="bottom" constant="8" symbolic="YES" id="sew-5y-b6W"/>
+                                    <constraint firstItem="itg-Oj-Ypu" firstAttribute="top" secondItem="EKZ-tG-Juk" secondAttribute="bottom" constant="8" symbolic="YES" id="sqb-Kq-nZG"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="autostart" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="animation" value="SlideUp"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="curve" value="easeIn"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="duration">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="delay">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="force">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="TcH-g6-FFe" firstAttribute="centerY" secondItem="Yie-VL-WGC" secondAttribute="centerY" id="7Zp-SU-A2M"/>
+                            <constraint firstItem="Ljk-kd-To9" firstAttribute="centerX" secondItem="TcH-g6-FFe" secondAttribute="centerX" id="Bxv-5g-Klv"/>
+                            <constraint firstItem="TcH-g6-FFe" firstAttribute="centerY" secondItem="Yie-VL-WGC" secondAttribute="centerY" id="ElM-03-8e1"/>
+                            <constraint firstItem="Ljk-kd-To9" firstAttribute="centerX" secondItem="Yie-VL-WGC" secondAttribute="centerX" id="IcO-vi-JJV"/>
+                            <constraint firstItem="TcH-g6-FFe" firstAttribute="top" secondItem="Ljk-kd-To9" secondAttribute="bottom" constant="12" id="SUI-Xa-zMI"/>
+                            <constraint firstItem="AA5-eo-o76" firstAttribute="leading" secondItem="Yie-VL-WGC" secondAttribute="leadingMargin" id="ULE-q2-MT0"/>
+                            <constraint firstItem="zqx-8d-N0Q" firstAttribute="top" secondItem="TcH-g6-FFe" secondAttribute="bottom" constant="249" id="ZFg-FO-tUR"/>
+                            <constraint firstItem="Ljk-kd-To9" firstAttribute="top" secondItem="mHd-Pa-Ewb" secondAttribute="bottom" constant="181" id="bzF-Fv-vRd"/>
+                            <constraint firstItem="AA5-eo-o76" firstAttribute="top" secondItem="mHd-Pa-Ewb" secondAttribute="bottom" constant="8" symbolic="YES" id="iWk-Ac-08X"/>
+                            <constraint firstItem="TcH-g6-FFe" firstAttribute="centerX" secondItem="Yie-VL-WGC" secondAttribute="centerX" id="l0S-sc-l4Q"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="email" destination="EKZ-tG-Juk" id="dS6-Dg-Ytr"/>
+                        <outlet property="firstName" destination="F95-xL-os8" id="Z5o-9N-Pja"/>
+                        <outlet property="lastName" destination="3ck-Il-3yK" id="WKs-kF-j3H"/>
+                        <outlet property="password" destination="itg-Oj-Ypu" id="b9h-M0-SgU"/>
+                        <outlet property="signUpBtn" destination="yKa-Xv-EBr" id="OWi-zP-prj"/>
+                        <segue destination="A3e-Mj-mFj" kind="presentation" identifier="loginSegue" modalTransitionStyle="crossDissolve" id="WyS-1Y-Vjb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4uD-xP-Cc1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-449.99999999999994" y="433.59375"/>
+        </scene>
+        <!--mainNavigationController-->
+        <scene sceneID="rFE-MT-x3M">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="mainNavigationController" id="A3e-Mj-mFj" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Sns-3l-xMi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1146" y="203"/>
+        </scene>
+    </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="xJ7-dd-0YY"/>
+    </inferredMetricsTieBreakers>
+</document>

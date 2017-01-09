@@ -42,6 +42,7 @@ struct Route {
     var image : Int = 0
     var color : Int = 0
     var stops : [Stop] = []
+    var createdBy : String = ""
     
     func save()  {
         var ref: FIRDatabaseReference!

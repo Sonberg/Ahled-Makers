@@ -43,6 +43,7 @@ class StopViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.estimatedRowHeight = 140
         tableView.setNeedsLayout()
         tableView.layoutIfNeeded()
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
 
         
         let headerView : UIImageView = UIImageView()

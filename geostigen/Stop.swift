@@ -42,6 +42,7 @@ struct Stop {
     var lat : Double = Double(0)
     var long : Double = Double(0)
     var posts : [Post] = []
+    var visitedBy : [String] = []
     
     var isLocked : Bool = true
     var image : UIImage?

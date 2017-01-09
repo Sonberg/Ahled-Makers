@@ -85,10 +85,10 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
     //MARK : - UI
     func updateUI() {
         self.routeViewController?.navigationBar.topItem?.title = self.route.name
-        let edit = UIBarButtonItem(title: "Redigera", style: UIBarButtonItemStyle.done, target: self, action: #selector(didTouchEdit(_:)))
-        edit.tintColor = Library.sharedInstance.colors[4]
-        
-        self.routeViewController?.navigationBar.topItem?.rightBarButtonItems = [edit]
+        let edit = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        edit.setImage(UIImage.fontAwesomeIcon(name: .edit, textColor: Library.sharedInstance.colors[4], size: CGSize(width: 30, height: 30)), for: .normal)
+        edit.addTarget(self, action: #selector(didTouchEditStops(_:)), for: .touchUpInside)
+        self.routeViewController?.navigationBar.topItem?.rightBarButtonItems = [UIBarButtonItem(customView: edit)]
     }
     
     
@@ -157,8 +157,31 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
     }
     
     // MARK: - Stops
-    var selectedStop : Stop?
+    var selectedStop : Stop = Stop()
     var appendButton : SpringImageView?
+    var isEditingStops: Bool = false
+    func didTouchEditStops(_ sender : UIButton) {
+        self.isEditingStops = !self.isEditingStops
+        
+        for i in 0...(self.stops.count - 1) {
+            let view = self.stops[i]
+            if self.isEditingStops {
+                if (view.accessibilityHint != nil) {
+                    sender.setImage(UIImage.fontAwesomeIcon(name: .times, textColor: Library.sharedInstance.colors[4], size: CGSize(width: 30, height: 30)), for: .normal)
+                    view.animation = "squeeze"
+                    view.duration = 1
+                    view.delay = 1
+                    view.repeatCount = 999
+                    view.animate()
+                }
+            } else {
+                view.repeatCount = 0
+                view.layer.removeAllAnimations()
+                sender.setImage(UIImage.fontAwesomeIcon(name: .edit, textColor: Library.sharedInstance.colors[4], size: CGSize(width: 30, height: 30)), for: .normal)
+                
+            }
+        }
+    }
     
     func initStops() {
         self.appendButton = SpringImageView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
@@ -190,11 +213,16 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
         for stop in self.route.stops {
             if stop.id == sender.accessibilityHint {
                 self.selectedStop = stop
-                self.performSegue(withIdentifier: "stopSegue", sender: sender)
+                if isEditingStops {
+                     self.selectedStop = stop
+                    print("editing:" + stop.id)
+                    self.performSegue(withIdentifier: "createStopSegue", sender: sender)
+                } else {
+                    self.performSegue(withIdentifier: "stopSegue", sender: sender)
+                }
             }
         }
-        if !(sender.accessibilityHint != nil) {
-            self.selectedStop = Stop()
+        if !(sender.accessibilityHint != nil && !isEditingStops) {
             self.performSegue(withIdentifier: "createStopSegue", sender: sender)
         }
     }
@@ -277,12 +305,12 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+        isEditingStops = false
         if segue.destination is StopViewController && self.routeViewController != nil {
             let vc = segue.destination as! StopViewController
             vc.routeViewController = self.routeViewController
             vc.route = self.route
-            vc.stop = self.selectedStop!
+            vc.stop = self.selectedStop
             self.routeViewController?.closeButton?.setStyle(DynamicButtonStyle.arrowLeft, animated: true)
             self.routeViewController?.navigationBar.topItem?.rightBarButtonItems = []
 
@@ -292,12 +320,12 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
             let vc = segue.destination as! CreateStopViewController
             vc.routeViewController = self.routeViewController
             vc.route = self.route
-            vc.stop = self.selectedStop!
+            vc.stop = self.selectedStop
             self.routeViewController?.closeButton?.setStyle(DynamicButtonStyle.arrowLeft, animated: true)
             
         }
         
-        self.selectedStop = nil
+        self.selectedStop = Stop()
     }
 
 

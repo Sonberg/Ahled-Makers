@@ -1,5 +1,9 @@
 PODS:
+  - CZPicker (0.4.3)
   - DynamicButton (3.1.0)
+  - Firebase/Auth (3.9.0):
+    - Firebase/Core
+    - FirebaseAuth (= 3.0.6)
   - Firebase/Core (3.9.0):
     - FirebaseAnalytics (= 3.5.1)
     - FirebaseCore (= 3.4.4)
@@ -12,6 +16,10 @@ PODS:
     - GoogleInterchangeUtilities (~> 1.2)
     - GoogleSymbolUtilities (~> 1.1)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseAuth (3.0.6):
+    - FirebaseAnalytics (~> 3.4)
+    - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
+    - GTMSessionFetcher/Core (~> 1.1)
   - FirebaseCore (3.4.4):
     - GoogleInterchangeUtilities (~> 1.2)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
@@ -23,22 +31,34 @@ PODS:
   - GoogleInterchangeUtilities (1.2.2):
     - GoogleSymbolUtilities (~> 1.1)
   - GoogleSymbolUtilities (1.1.2)
+  - GoogleToolboxForMac/DebugUtils (2.1.0):
+    - GoogleToolboxForMac/Defines (= 2.1.0)
   - GoogleToolboxForMac/Defines (2.1.0)
   - GoogleToolboxForMac/NSData+zlib (2.1.0):
     - GoogleToolboxForMac/Defines (= 2.1.0)
+  - GoogleToolboxForMac/NSDictionary+URLArguments (2.1.0):
+    - GoogleToolboxForMac/DebugUtils (= 2.1.0)
+    - GoogleToolboxForMac/Defines (= 2.1.0)
+    - GoogleToolboxForMac/NSString+URLArguments (= 2.1.0)
+  - GoogleToolboxForMac/NSString+URLArguments (2.1.0)
+  - GTMSessionFetcher/Core (1.1.7)
   - LinearProgressBar (0.0.1)
   - M13Checkbox (3.1.2)
   - MXParallaxHeader (0.6.0)
   - Presentr (1.0.3)
+  - RKDropdownAlert (0.3.0)
   - SideMenu (2.0.6)
   - Spring (1.0.3)
+  - SVProgressHUD (2.0.4)
   - TransitionAnimation (3.1.0):
     - TransitionTreasury (~> 3.1)
   - TransitionTreasury (3.1.0)
   - UIImageView-Letters (1.1.4)
 
 DEPENDENCIES:
+  - CZPicker
   - DynamicButton (~> 3.1.0)
+  - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
   - FontAwesome.swift
@@ -47,8 +67,10 @@ DEPENDENCIES:
   - M13Checkbox
   - MXParallaxHeader
   - Presentr
+  - RKDropdownAlert
   - SideMenu
   - Spring (from `https://github.com/MengTo/Spring.git`, branch `swift3`)
+  - SVProgressHUD
   - TransitionAnimation (~> 3.1.0)
   - TransitionTreasury (~> 3.1.0)
   - UIImageView-Letters
@@ -64,9 +86,11 @@ CHECKOUT OPTIONS:
     :git: https://github.com/MengTo/Spring.git
 
 SPEC CHECKSUMS:
+  CZPicker: 55aa1751ea26e209814552da1a9a08cba8bbf72a
   DynamicButton: 37968af761a31274aeac427f40204688fa810342
   Firebase: ff77ffb77b317c3720fef57a60e9335cebf962e6
   FirebaseAnalytics: 6e58fc9b397664369ac7617fb0ba93fab6ba7b5b
+  FirebaseAuth: 96e9674ff31d6e1f826d53e26aa003a57cab0295
   FirebaseCore: d0ed25f27b6f9158eccc439f1be6f92e81207e28
   FirebaseDatabase: 3ebb2edb6007c3f0f87b248f3fa212bde56a1468
   FirebaseInstanceID: ba1e640935235e5fac39dfa816fe7660e72e1a8a
@@ -75,16 +99,19 @@ SPEC CHECKSUMS:
   GoogleInterchangeUtilities: d5bc4d88d5b661ab72f9d70c58d02ca8c27ad1f7
   GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
   GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
+  GTMSessionFetcher: a1f8ed39e4fe21c68957daed472c7afbcdf29166
   LinearProgressBar: 8e88a5891dc964bea3ae88bdd3d5862cd168f628
   M13Checkbox: 7c7c7e8d90f514b6925523531762b768ca778e53
   MXParallaxHeader: 2997592b8349baf8557ae0e4346f6b17e141de39
   Presentr: 9759bf538d9f3211a5ee1314a541a11bbea7ea71
+  RKDropdownAlert: f4b3364c251829ad439dc666836a1f2dad26f4c7
   SideMenu: 90be7a14e9f54eb528f96f2033aa54f2992c5667
   Spring: 3f02b5dc3308572ef177b3cad0fa7bbc4b0706f7
+  SVProgressHUD: bfde85ed6c573ea802b9cb37894ed9b629034f1b
   TransitionAnimation: 251fdfacdf1685b425b85355bf7ab50ce1a1bec0
   TransitionTreasury: d2e901181a157719d4b275638a40ca2d794bc601
   UIImageView-Letters: f62db28076797adf3560ab7410647dc6899b9eef
 
-PODFILE CHECKSUM: db902ac51d325b1708db17dd2c9f37570dca59d0
+PODFILE CHECKSUM: 803f663f7e28fc168afb41100001950c2f28c9bf
 
 COCOAPODS: 1.1.1

@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'E356A9771F578B0D2ABC9277D53B533B'
+               BlueprintIdentifier = '0B606C191DC3804B8E00A8D1AABDACAC'
                BlueprintName = 'Presentr'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'Presentr.framework'>

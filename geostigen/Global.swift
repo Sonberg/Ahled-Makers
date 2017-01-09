@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import SVProgressHUD
 
 
 extension UIApplication {
@@ -36,5 +37,21 @@ extension UIColor {
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return image!
+    }
+}
+
+
+extension UIViewController {
+    func showSpinner() -> Void {
+        SVProgressHUD.setDefaultStyle(.custom)
+        SVProgressHUD.setBackgroundColor(UIColor(white: 1, alpha: 0.4))
+        SVProgressHUD.setForegroundColor(UIColor.white)
+        SVProgressHUD.setRingRadius(CGFloat(28))
+        SVProgressHUD.setCornerRadius(CGFloat(50))
+        SVProgressHUD.show()
+    }
+    
+    func hideSpinner() -> Void {
+        SVProgressHUD.dismiss()
     }
 }
