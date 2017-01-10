@@ -30,8 +30,12 @@ class MapCell: UITableViewCell, MKMapViewDelegate {
     
     
     // MARK : - Variables
-    var location : CLLocationCoordinate2D = CLLocationCoordinate2D()
     var onLocationSelected: ((CLLocationCoordinate2D) -> Void)?
+    var location : CLLocationCoordinate2D = CLLocationCoordinate2D() {
+        didSet {
+            addAnnotation(coordinate: location)
+        }
+    }
 
     
     override func awakeFromNib() {
@@ -43,9 +47,7 @@ class MapCell: UITableViewCell, MKMapViewDelegate {
     private func configure() {
         selectionStyle = .none
         mapView.delegate = self
-        if !location.latitude.isNaN {
-            addAnnotation(coordinate: location)
-        }
+        addAnnotation(coordinate: location)
     }
     
     func addAnnotation(coordinate : CLLocationCoordinate2D) -> Void {

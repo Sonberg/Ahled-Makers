@@ -10,6 +10,14 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--loginViewController-->
+        <scene sceneID="OzH-Dz-cJr">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Auth" referencedIdentifier="loginViewController" id="jb0-7P-tbg" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gGd-8j-O6N" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="971" y="-235"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -25,6 +33,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="150" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qP8-nH-Ute">
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="separatorColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="cell" rowHeight="160" id="Eow-gw-kOa" customClass="CardTableViewCell" customModule="geostigen" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="768" height="160"/>
@@ -115,6 +124,12 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="UM7-wk-6Sd">
+                        <barButtonItem key="leftBarButtonItem" title="Logga ut" id="IE7-te-yzS">
+                            <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="didTouchLogout:" destination="BYZ-38-t0r" id="1bq-n0-4ev"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="MBv-5M-rgq">
                             <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                             <connections>
@@ -123,7 +138,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addBarButton" destination="MBv-5M-rgq" id="DP4-qe-Zsx"/>
                         <outlet property="tableView" destination="qP8-nH-Ute" id="dIp-jx-Kcd"/>
+                        <segue destination="jb0-7P-tbg" kind="presentation" identifier="logoutSegue" modalTransitionStyle="crossDissolve" id="6Bt-qs-Uhg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

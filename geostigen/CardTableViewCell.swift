@@ -38,7 +38,8 @@ class CardTableViewCell: UITableViewCell {
         cardView.layer.shadowColor = UIColor.black.withAlphaComponent(0.2).cgColor
         cardView.layer.shadowOffset = CGSize(width: 0, height: 0)
         cardView.layer.shadowOpacity = 0.8
-        contentView.backgroundColor = UIColor(colorLiteralRed: 240/255.0, green: 240/255.0, blue: 240/255.0, alpha: 1.0)
+        contentView.backgroundColor = UIColor.groupTableViewBackground
+            //UIColor(colorLiteralRed: 240/255.0, green: 240/255.0, blue: 240/255.0, alpha: 1.0)
         
         if location != nil && route.lat != Double(0) {
             distanceLabel.text = String(describing: Int(Double((location?.distance(from: CLLocation(latitude: route.lat, longitude: route.long)))!))) + " m"

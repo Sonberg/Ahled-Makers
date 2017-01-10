@@ -42,6 +42,7 @@ class CreateStopViewController: FormViewController {
         self.tableView.contentInset = UIEdgeInsets(top: 32, left: 0, bottom: 0, right: 0)
         
         let MapRow = CustomRowFormer<MapCell>(instantiateType: .Nib(nibName: "MapCell")) {
+            print(self.stop.lat)
             $0.location = CLLocationCoordinate2D(latitude: self.stop.lat, longitude: self.stop.long)
             
             
@@ -52,21 +53,20 @@ class CreateStopViewController: FormViewController {
             }.configure {
                 $0.rowHeight = 300
                 $0.cell.backgroundColor = .clear
+                $0.cell.location = CLLocationCoordinate2D(latitude: self.stop.lat, longitude: self.stop.long)
         }
         
         
-        let titleRow = TextFieldRowFormer<FormTextFieldCell>() {
-            $0.titleLabel.text = self.stop.name
-            }.configure {
+        let titleRow = TextFieldRowFormer<FormTextFieldCell>().configure {
+                $0.text = self.stop.name
                 $0.placeholder = "Namn"
             }.onTextChanged { (text : String) in
                 self.navigationItem.title = text
                 self.stop.name = text
         }
         
-        let descRow = TextViewRowFormer<FormTextViewCell> {
-            $0.titleLabel.text = self.stop.desc
-            }.configure {
+        let descRow = TextViewRowFormer<FormTextViewCell>().configure {
+                $0.text = self.stop.desc
                 $0.placeholder = "Beskrivning"
             }.onTextChanged { (text : String) in
                 self.stop.desc = text

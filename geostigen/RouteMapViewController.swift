@@ -47,6 +47,7 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
     var locationManager : CLLocationManager!
     var stops : [SpringImageView] = []
     var route : Route = Route()
+    let regionRadius : Int = 100
     
     let presenter: Presentr = {
         let presenter = Presentr(presentationType: .alert)
@@ -185,6 +186,26 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
         }
     }
     
+    func userDidEnterRegionFor(index: Int) {
+        print("In position")
+        for index in 0...(self.stops.count - 1)  {
+            let stop = self.route.stops[index]
+            self.route.stops[index].isLocked = false
+            for i in 0...(self.scrollView.subviews.count - 1) {
+                if self.scrollView.subviews[i].accessibilityHint == stop.id {
+                    let view = self.scrollView.subviews[i] as! SpringImageView
+                    let when = DispatchTime.now() + 1
+                    DispatchQueue.main.asyncAfter(deadline: when) {
+                        print("setting")
+                        view.setImageWith(String(index + 1), color: Library.sharedInstance.colors[4], circular: true)
+                        //view.animation = "pop"
+                        //view.animate()
+                    }
+                }
+            }
+        }
+    }
+    
     func initStops() {
         self.appendButton = SpringImageView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(RouteMapViewController.stopTapped(sender:)))
@@ -310,8 +331,27 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if locations.last != nil {
             mapView.showAnnotations(self.mapView.annotations, animated: true)
-            locationManager.startUpdatingLocation()
-            
+            for annotation in self.mapView.annotations {
+                if annotation is MKUserLocation {} else {
+                    /*
+                     let a = MKMapPoint(x: (locations.last?.coordinate.latitude)!, y: (locations.last?.coordinate.longitude)!)
+                     let b = MKMapPoint(x: annotation.coordinate.latitude, y: annotation.coordinate.longitude)
+                     let meters = MKMetersBetweenMapPoints(a, b)
+                     print(meters)
+                     */
+                    
+                    let dis = locations.last?.distance(from: CLLocation(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude))
+                    if Int(dis as Double!) < self.regionRadius {
+                        for index : Int in 0...(self.stops.count - 1)  {
+                            let stop = self.route.stops[index]
+                            if stop.name == annotation.title! && stop.isLocked {
+                                userDidEnterRegionFor(index: index)
+                            }
+                        }
+                    }
+                }
+                
+            }
         }
     }
     

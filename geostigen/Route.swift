@@ -41,6 +41,10 @@ class Route {
             if data["long"] != nil {
                 self.long = data["long"] as! Double
             }
+            
+            if data["createdBy"] != nil {
+                self.createdBy = data["createdBy"] as! String
+            }
     
         }
     }
@@ -56,21 +60,23 @@ class Route {
     var createdBy : String = ""
     
     func updateCenter() {
-        let mapView = MKMapView()
-        var annotations : [MKAnnotation] = []
+        let mapView = MKMapView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        mapView.showsUserLocation = false
         
         for stop in self.stops {
             let annotation = MKPointAnnotation()
             annotation.coordinate = CLLocationCoordinate2D(latitude: stop.lat, longitude: stop.long)
-            annotations.append(annotation)
+            mapView.addAnnotation(annotation)
+            print("annotation added")
         }
-        
-        mapView.showAnnotations(annotations, animated: false)
-        let center = mapView.centerCoordinate
-        self.lat = center.latitude
-        self.long = center.longitude
-        
-        self.save()
+        mapView.showAnnotations(mapView.annotations, animated: false)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+            let center = mapView.centerCoordinate
+            self.lat = center.latitude
+            self.long = center.longitude
+            print("saving.." + String(center.latitude) + " & " + String(center.longitude))
+            self.save()
+        }
     }
     
     func save()  {
@@ -88,7 +94,8 @@ class Route {
             "image" : self.image,
             "color" : self.color,
             "lat" : self.lat,
-            "long" : self.long
+            "long" : self.long,
+            "createdBy" : self.createdBy
         ]
         
         if self.id.characters.count > 0 {
