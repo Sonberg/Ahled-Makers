@@ -45,6 +45,7 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
     var tr_presentTransition : TRViewControllerTransitionDelegate?
     var routeViewController : RouteViewController?
     var locationManager : CLLocationManager!
+    var user : User = User()
     var stops : [SpringImageView] = []
     var route : Route = Route()
     let regionRadius : Int = 100
@@ -59,7 +60,9 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
-        initStops()
+        if self.user.type == .admin {
+            initStops()
+        }
         updateUI()
         syncFirebase()
         location()
@@ -114,6 +117,10 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
                 }
                 
                 self.mapView.addAnnotation(annotation)
+                
+                if self.route.createdBy == self.user.id {
+                    stop.isLocked = false
+                }
             } else {
                 stop.isLocked = false
             }
@@ -138,6 +145,25 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
                 }
             }
         }
+    }
+    
+    // MARK : - Progress
+    func updateProgress() {
+        let all : Int = self.route.stops.count
+        var finnish : Int = 0
+        for stop in self.route.stops {
+            if !stop.isLocked {
+                finnish = finnish + 1
+            }
+        }
+        
+        print(finnish/all)
+        if self.routeViewController != nil {
+            print("setting progress")
+            print(CGFloat(finnish)/CGFloat(all))
+            self.routeViewController?.setProgress(float: CGFloat(finnish)/CGFloat(all))
+        }
+        
     }
     
     // MARK : - Screen orientation
@@ -191,6 +217,9 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
         for index in 0...(self.stops.count - 1)  {
             let stop = self.route.stops[index]
             self.route.stops[index].isLocked = false
+            if self.route.createdBy != self.user.id {
+                self.route.stops[index].visitedBy.append(self.user.id)
+            }
             for i in 0...(self.scrollView.subviews.count - 1) {
                 if self.scrollView.subviews[i].accessibilityHint == stop.id {
                     let view = self.scrollView.subviews[i] as! SpringImageView
@@ -252,13 +281,17 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
     
     func addStop(stop : Stop) {
         print(stop)
-        let offset = 1
+        var offset = 0
+        if self.user.type == .admin {
+            offset = 1
+        } 
+        
         let index = self.stops.count
         let image = SpringImageView(frame: CGRect(x: 80 * index, y: 0, width: 60, height: 60))
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(RouteMapViewController.stopTapped(sender:)))
         tapGesture.accessibilityHint = stop.id
         
-         if stop.isLocked {
+         if stop.isLocked && self.user.id != self.route.createdBy {
             image.setImageWith(String.fontAwesomeIcon(name: .lock), color: Library.sharedInstance.colors[self.route.color], circular: true, textAttributes: [ NSFontAttributeName: UIFont.fontAwesome(ofSize: 30), NSForegroundColorAttributeName: UIColor.white ])
          } else {
             image.setImageWith(String(index + 1), color: Library.sharedInstance.colors[self.route.color], circular: true)
@@ -280,6 +313,7 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
         let width = 80 * (index + offset)
         let leftInset : CGFloat = CGFloat(Int(self.view.bounds.width) / 2 - width / 2)
         self.scrollView.contentInset = UIEdgeInsets(top: 0, left: leftInset, bottom: 0, right: 0)
+        self.updateProgress()
     }
     
     

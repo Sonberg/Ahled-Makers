@@ -20,10 +20,12 @@ class RouteViewController: UIViewController, LinearProgressDelegate {
     @IBOutlet weak var cardView: UIView!
     @IBOutlet weak var progressBar: LinearProgressView!
     @IBOutlet weak var navigationBar: UINavigationBar!
+    @IBOutlet weak var progressView: UIProgressView!
     
     //MARK: - Variables
     let screen : CGRect = UIScreen.main.bounds
     var closeButton : DynamicButton?
+    var user : User = User()
     var route : Route = Route()
     var routeNavigation : RouteNavigationViewController?
     
@@ -81,6 +83,12 @@ class RouteViewController: UIViewController, LinearProgressDelegate {
     }
     
     // MARK: - Progress View
+    func setProgress(float : CGFloat) {
+        DispatchQueue.main.async {
+            self.progressView.progress = Float(float)
+        }
+    }
+    
     func didChangeProgress(fromValue from: Double, toValue to: Double) {
         
     }
@@ -95,6 +103,7 @@ class RouteViewController: UIViewController, LinearProgressDelegate {
             let vc = self.routeNavigation?.viewControllers.first as? RouteMapViewController
             vc?.routeViewController = self
             vc?.route = self.route
+            vc?.user = self.user
             print("send mytselft")
         }
     }

@@ -28,16 +28,30 @@
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bx5-gv-WeT" customClass="LinearProgressView" customModule="LinearProgressBar">
                                         <rect key="frame" x="0.0" y="0.0" width="704" height="8"/>
+                                        <subviews>
+                                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0rc-5F-FOx">
+                                                <rect key="frame" x="0.0" y="3" width="704" height="2"/>
+                                                <color key="progressTintColor" red="0.2287036777" green="0.76662892100000002" blue="0.4052042663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="trackTintColor" red="0.68789500000000003" green="0.90502345559999997" blue="0.7608665228" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="barHeight">
+                                                        <real key="value" value="8"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </progressView>
+                                        </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="0rc-5F-FOx" firstAttribute="leading" secondItem="Bx5-gv-WeT" secondAttribute="leading" id="Mpf-yt-WwJ"/>
+                                            <constraint firstAttribute="trailing" secondItem="0rc-5F-FOx" secondAttribute="trailing" id="hSP-ws-Z4p"/>
+                                            <constraint firstItem="0rc-5F-FOx" firstAttribute="centerY" secondItem="Bx5-gv-WeT" secondAttribute="centerY" id="see-kG-r72"/>
+                                        </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="barColor">
                                                 <color key="value" red="0.22765041771359409" green="0.77045677264808365" blue="0.4029976534513332" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="trackColor">
                                                 <color key="value" red="0.22829687595367432" green="0.77059978246688843" blue="0.40494644641876221" alpha="0.40207891949152541" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="progressValue">
-                                                <real key="value" value="40"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="number" keyPath="barThickness">
                                                 <real key="value" value="8"/>
@@ -60,26 +74,26 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="fFd-nI-aQF" firstAttribute="top" secondItem="GxJ-vl-cqV" secondAttribute="topMargin" id="53d-gG-Lcn"/>
-                                    <constraint firstAttribute="trailing" secondItem="Bx5-gv-WeT" secondAttribute="trailing" id="5xK-ZE-xK8"/>
-                                    <constraint firstItem="fFd-nI-aQF" firstAttribute="leading" secondItem="Xwg-59-mZT" secondAttribute="leading" id="7PK-hX-bhu"/>
-                                    <constraint firstItem="Bx5-gv-WeT" firstAttribute="top" secondItem="GxJ-vl-cqV" secondAttribute="top" id="R57-gU-sYF"/>
-                                    <constraint firstItem="Bx5-gv-WeT" firstAttribute="trailing" secondItem="fFd-nI-aQF" secondAttribute="trailing" id="RTU-ay-uXW"/>
-                                    <constraint firstItem="Bx5-gv-WeT" firstAttribute="leading" secondItem="GxJ-vl-cqV" secondAttribute="leading" id="WDc-Qt-h3T"/>
-                                    <constraint firstAttribute="bottom" secondItem="Xwg-59-mZT" secondAttribute="bottom" id="XDZ-yX-k6d"/>
-                                    <constraint firstItem="fFd-nI-aQF" firstAttribute="top" secondItem="Bx5-gv-WeT" secondAttribute="bottom" id="eBt-R9-jk1"/>
-                                    <constraint firstItem="Xwg-59-mZT" firstAttribute="top" secondItem="fFd-nI-aQF" secondAttribute="bottom" id="idv-AX-Ldm"/>
-                                    <constraint firstItem="Bx5-gv-WeT" firstAttribute="leading" secondItem="fFd-nI-aQF" secondAttribute="leading" id="kBf-aY-spu"/>
-                                    <constraint firstItem="fFd-nI-aQF" firstAttribute="trailing" secondItem="Xwg-59-mZT" secondAttribute="trailing" id="pIW-NA-HNJ"/>
+                                    <constraint firstItem="fFd-nI-aQF" firstAttribute="top" secondItem="Bx5-gv-WeT" secondAttribute="bottom" id="0oN-bH-48m"/>
+                                    <constraint firstItem="fFd-nI-aQF" firstAttribute="leading" secondItem="Xwg-59-mZT" secondAttribute="leading" id="EZt-XJ-xyi"/>
+                                    <constraint firstItem="fFd-nI-aQF" firstAttribute="top" secondItem="GxJ-vl-cqV" secondAttribute="topMargin" id="IS4-0B-b7H"/>
+                                    <constraint firstItem="Bx5-gv-WeT" firstAttribute="top" secondItem="GxJ-vl-cqV" secondAttribute="top" id="PcL-Kh-VEn"/>
+                                    <constraint firstItem="Bx5-gv-WeT" firstAttribute="leading" secondItem="fFd-nI-aQF" secondAttribute="leading" id="Ryv-ek-SWa"/>
+                                    <constraint firstItem="fFd-nI-aQF" firstAttribute="trailing" secondItem="Xwg-59-mZT" secondAttribute="trailing" id="TSj-RS-jcs"/>
+                                    <constraint firstItem="Bx5-gv-WeT" firstAttribute="trailing" secondItem="fFd-nI-aQF" secondAttribute="trailing" id="hGf-Ti-1fq"/>
+                                    <constraint firstItem="Xwg-59-mZT" firstAttribute="top" secondItem="fFd-nI-aQF" secondAttribute="bottom" id="hgL-zG-dSU"/>
+                                    <constraint firstItem="Bx5-gv-WeT" firstAttribute="leading" secondItem="GxJ-vl-cqV" secondAttribute="leading" id="ost-Y0-zgQ"/>
+                                    <constraint firstAttribute="bottom" secondItem="Xwg-59-mZT" secondAttribute="bottom" id="pgP-Ce-HB4"/>
+                                    <constraint firstAttribute="trailing" secondItem="Bx5-gv-WeT" secondAttribute="trailing" id="r0v-YH-unT"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="GxJ-vl-cqV" firstAttribute="top" secondItem="yCW-Ct-wiX" secondAttribute="bottom" constant="12" id="5o3-1X-Zei"/>
-                            <constraint firstItem="GxJ-vl-cqV" firstAttribute="centerX" secondItem="Yfh-bQ-EGL" secondAttribute="centerX" id="Nuf-hY-3hG"/>
-                            <constraint firstItem="GxJ-vl-cqV" firstAttribute="leading" secondItem="Yfh-bQ-EGL" secondAttribute="leadingMargin" constant="12" id="f7P-N6-Knh"/>
-                            <constraint firstItem="GxJ-vl-cqV" firstAttribute="centerY" secondItem="Yfh-bQ-EGL" secondAttribute="centerY" id="rCO-A7-K18"/>
+                            <constraint firstItem="GxJ-vl-cqV" firstAttribute="centerX" secondItem="Yfh-bQ-EGL" secondAttribute="centerX" id="3YE-EW-fNl"/>
+                            <constraint firstItem="GxJ-vl-cqV" firstAttribute="centerY" secondItem="Yfh-bQ-EGL" secondAttribute="centerY" id="Edy-ya-fPq"/>
+                            <constraint firstItem="GxJ-vl-cqV" firstAttribute="top" secondItem="yCW-Ct-wiX" secondAttribute="bottom" constant="12" id="Vrn-1i-t5s"/>
+                            <constraint firstItem="GxJ-vl-cqV" firstAttribute="leading" secondItem="Yfh-bQ-EGL" secondAttribute="leadingMargin" constant="12" id="hm2-1C-Hrm"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="vdU-2c-lkG"/>
@@ -88,6 +102,7 @@
                         <outlet property="mapView" destination="0EP-tR-eiU" id="FgB-bd-zpU"/>
                         <outlet property="navigationBar" destination="fFd-nI-aQF" id="Leu-yV-cPb"/>
                         <outlet property="progressBar" destination="Bx5-gv-WeT" id="LtH-d0-t8e"/>
+                        <outlet property="progressView" destination="0rc-5F-FOx" id="fx2-i0-Ve2"/>
                         <outlet property="scrollView" destination="HZC-NW-lrO" id="6Kx-AZ-Xfz"/>
                     </connections>
                 </viewController>

@@ -15,6 +15,7 @@ import SideMenu
 class CreateViewController: FormViewController {
     
     // MARK : - Variables
+    var user : User = User()
     var route : Route = Route()
     var delete : UIBarButtonItem?
     var save : UIBarButtonItem?

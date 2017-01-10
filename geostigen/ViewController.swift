@@ -236,6 +236,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             destinationViewController.route = self.mine[indexPath.row]
         }
         
+        destinationViewController.user = self.user
+        
         customPresentViewController(presenter, viewController: destinationViewController, animated: true, completion: nil)
     }
     
@@ -244,6 +246,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if segue.destination is UISideMenuNavigationController && sender is IndexPath && user.type == .admin {
             let nav = segue.destination as! UISideMenuNavigationController
             let vc = nav.viewControllers.first as! CreateViewController
+            vc.user = self.user
             
             if (sender as! IndexPath).section == 0 {
                 vc.route = self.routes[(sender as! IndexPath).row]

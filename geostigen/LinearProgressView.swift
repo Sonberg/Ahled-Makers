@@ -35,6 +35,18 @@ class LinearProgressView: UIView {
         drawProgressView()
     }
     
+    func setValue(value : CGFloat) {
+        if (value >= 100) {
+            self.progressValue = 100
+        } else if (value <= 0) {
+            self.progressValue = 0
+        } else {
+            self.progressValue = value
+        }
+        print("setting progress")
+        self.drawProgressView()
+    }
+    
     func drawProgressView() {
         let context = UIGraphicsGetCurrentContext()
         context?.saveGState()

@@ -13,6 +13,7 @@ import MapKit
 class CreateStopViewController: FormViewController {
     
     // MARK : - Variable
+    var user : User = User()
     var routeViewController : RouteViewController?
     var route : Route = Route()
     var stop : Stop = Stop()

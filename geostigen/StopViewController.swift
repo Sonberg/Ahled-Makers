@@ -22,6 +22,7 @@ class StopViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK : - Variables
     let inputTextField: UITextField = UITextField()
     var routeViewController : RouteViewController?
+    var user : User = User()
     var route : Route = Route()
     var stop : Stop = Stop()
     var posts : [Post] = []
