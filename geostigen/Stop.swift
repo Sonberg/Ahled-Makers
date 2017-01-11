@@ -33,6 +33,11 @@ struct Stop {
                 self.long = data["long"] as! Double
             }
             
+            if data["visitedBy"] != nil {
+                self.visitedBy = data["visitedBy"] as! [String]
+                print(self.visitedBy)
+            }
+            
         }
     }
     
@@ -62,7 +67,8 @@ struct Stop {
             "name" : self.name,
             "desc" : self.desc,
             "lat" : self.lat,
-            "long" : self.long
+            "long" : self.long,
+            "visitedBy" : self.visitedBy
         ]
         
         if self.id.characters.count > 0 {

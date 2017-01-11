@@ -210,26 +210,27 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
                 
             }
         }
+        self.updateProgress()
     }
     
     func userDidEnterRegionFor(index: Int) {
         print("In position")
-        for index in 0...(self.stops.count - 1)  {
-            let stop = self.route.stops[index]
-            self.route.stops[index].isLocked = false
-            if self.route.createdBy != self.user.id {
-                self.route.stops[index].visitedBy.append(self.user.id)
-            }
-            for i in 0...(self.scrollView.subviews.count - 1) {
-                if self.scrollView.subviews[i].accessibilityHint == stop.id {
-                    let view = self.scrollView.subviews[i] as! SpringImageView
-                    let when = DispatchTime.now() + 1
-                    DispatchQueue.main.asyncAfter(deadline: when) {
-                        print("setting")
-                        view.setImageWith(String(index + 1), color: Library.sharedInstance.colors[4], circular: true)
-                        //view.animation = "pop"
-                        //view.animate()
-                    }
+        let stop = self.route.stops[index]
+        self.route.stops[index].isLocked = false
+        if self.route.createdBy != self.user.id && self.route.stops[index].visitedBy.index(of: self.user.id) == nil {
+            self.route.stops[index].visitedBy.append(self.user.id)
+            self.route.stops[index].save(parentId: self.route.id)
+        }
+        print(self.route.stops[index].visitedBy)
+        for i in 0...(self.scrollView.subviews.count - 1) {
+            if self.scrollView.subviews[i].accessibilityHint == stop.id {
+                let view = self.scrollView.subviews[i] as! SpringImageView
+                let when = DispatchTime.now() + 1
+                DispatchQueue.main.asyncAfter(deadline: when) {
+                    print("setting")
+                    view.setImageWith(String(index + 1), color: Library.sharedInstance.colors[4], circular: true)
+                    //view.animation = "pop"
+                    //view.animate()
                 }
             }
         }
@@ -290,10 +291,17 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
         let image = SpringImageView(frame: CGRect(x: 80 * index, y: 0, width: 60, height: 60))
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(RouteMapViewController.stopTapped(sender:)))
         tapGesture.accessibilityHint = stop.id
-        
-         if stop.isLocked && self.user.id != self.route.createdBy {
+         if stop.isLocked && self.user.id != self.route.createdBy && stop.visitedBy.index(of: self.user.id) == nil {
             image.setImageWith(String.fontAwesomeIcon(name: .lock), color: Library.sharedInstance.colors[self.route.color], circular: true, textAttributes: [ NSFontAttributeName: UIFont.fontAwesome(ofSize: 30), NSForegroundColorAttributeName: UIColor.white ])
          } else {
+            let update = self.route.stops.index(where: { (new : Stop) -> Bool in
+                if new.id == stop.id {
+                    return true
+                }
+                return false
+            })
+            self.route.stops[update!].isLocked = false
+            
             image.setImageWith(String(index + 1), color: Library.sharedInstance.colors[self.route.color], circular: true)
         }
         

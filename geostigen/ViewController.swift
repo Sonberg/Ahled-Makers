@@ -34,7 +34,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     // MARK: - Variables
     var user : User!
     var locationManager : CLLocationManager!
-    var location : CLLocation?
+    var location : CLLocation! = nil
     var routes : [Route] = []
     var mine : [Route] = []
     let images : [UIImage] = [#imageLiteral(resourceName: "earyikg21d4-maja-petric"), #imageLiteral(resourceName: "xn_crzwxgdm-andreas-p"), #imageLiteral(resourceName: "rbthqzjd_vu-thaddaeus-lim"), #imageLiteral(resourceName: "jktv__bqmaa-brooke-lark"), #imageLiteral(resourceName: "u_nsisvpeak-christian-joudrey")]
@@ -99,10 +99,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                    self.routes[index] = route
                 }
             }
-            
-            for index in 0...(self.mine.count - 1) {
-                if self.mine[index].id == route.id {
-                    self.mine[index] = route
+            if self.mine.count > 0 {
+                for index in 0...(self.mine.count - 1) {
+                    if self.mine[index].id == route.id {
+                        self.mine[index] = route
+                    }
                 }
             }
             self.sortByLocation()
@@ -116,10 +117,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     self.routes.remove(at: index)
                 }
             }
-            
-            for index in 0...(self.mine.count - 1) {
-                if self.mine[index].id == route.id {
-                    self.mine.remove(at: index)
+            if self.mine.count > 0 {
+                for index in 0...(self.mine.count - 1) {
+                    if self.mine[index].id == route.id {
+                        self.mine.remove(at: index)
+                    }
                 }
             }
             self.tableView.reloadData()
@@ -127,14 +129,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func sortByLocation() {
-        self.routes.sort(by: {
-            Int((self.location?.distance(from: CLLocation(latitude: $0.lat, longitude: $0.long)))!) < Int((self.location?.distance(from: CLLocation(latitude: $1.lat, longitude: $1.long)))!)
-        })
-        
-        self.mine.sort(by: {
-            Int((self.location?.distance(from: CLLocation(latitude: $0.lat, longitude: $0.long)))!) < Int((self.location?.distance(from: CLLocation(latitude: $1.lat, longitude: $1.long)))!)
-        })
-        self.tableView.reloadData()
+        if self.location != nil {
+            self.routes.sort(by: {
+                Int((self.location?.distance(from: CLLocation(latitude: $0.lat, longitude: $0.long)))!) < Int((self.location?.distance(from: CLLocation(latitude: $1.lat, longitude: $1.long)))!)
+            })
+            
+            if self.mine.count > 1 {
+                self.mine.sort(by: {
+                    Int((self.location?.distance(from: CLLocation(latitude: $0.lat, longitude: $0.long)))!) < Int((self.location?.distance(from: CLLocation(latitude: $1.lat, longitude: $1.long)))!)
+                })
+            }
+            self.tableView.reloadData()
+        }
     }
     
     // MARK : - Location
