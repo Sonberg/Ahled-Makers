@@ -8,10 +8,12 @@
 
 import UIKit
 import CoreLocation
+import ChameleonFramework
 
 class CardTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var thumbnailView: UIImageView!
+   
+    @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var cardView: UIView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var descLabel: UILabel!
@@ -29,8 +31,10 @@ class CardTableViewCell: UITableViewCell {
     }
     
     func updateUI(route : Route, location : CLLocation?) -> Void {
-        thumbnailView.image = Library.sharedInstance.images[route.image]
+        //thumbnailView.image = Library.sharedInstance.images[route.image]
+        headerView.backgroundColor = Library.sharedInstance.colors[route.color].withAlphaComponent(0.8)
         nameLabel.text = route.name
+        nameLabel.textColor = UIColor(contrastingBlackOrWhiteColorOn: Library.sharedInstance.colors[route.color], isFlat: true)
         descLabel.text = route.desc
         cardView.backgroundColor = .white
         cardView.layer.cornerRadius = 3.0
@@ -39,7 +43,7 @@ class CardTableViewCell: UITableViewCell {
         cardView.layer.shadowOffset = CGSize(width: 0, height: 0)
         cardView.layer.shadowOpacity = 0.8
         contentView.backgroundColor = UIColor.groupTableViewBackground
-            //UIColor(colorLiteralRed: 240/255.0, green: 240/255.0, blue: 240/255.0, alpha: 1.0)
+        distanceLabel.textColor = UIColor(contrastingBlackOrWhiteColorOn: Library.sharedInstance.colors[route.color], isFlat: true).lighten(byPercentage: 0.2)
         
         if location != nil && route.lat != Double(0) {
             distanceLabel.text = String(describing: Int(Double((location?.distance(from: CLLocation(latitude: route.lat, longitude: route.long)))!))) + " m"

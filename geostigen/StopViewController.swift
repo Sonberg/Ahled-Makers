@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Presentr
 import Firebase
 import DynamicButton
 import FirebaseDatabase
@@ -20,8 +19,9 @@ class StopViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var tableView: UITableView!
     
     // MARK : - Variables
+    var ref : FIRDatabaseReference?
+    weak var routeViewDelegate : RouteViewDelegate?
     let inputTextField: UITextField = UITextField()
-    var routeViewController : RouteViewController?
     var user : User = User()
     var route : Route = Route()
     var stop : Stop = Stop()
@@ -29,13 +29,17 @@ class StopViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     
     // MARK : - Actions
-    @IBAction func dismissView(_ sender: Any) {
+    func didTouchDismiss(_ sender : Any) {
+        print("touch")
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    deinit {
+        print("Stop View controller hade been deinit")
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.isScrollEnabled = true
@@ -45,9 +49,8 @@ class StopViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.estimatedRowHeight = 140
         tableView.setNeedsLayout()
         tableView.layoutIfNeeded()
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
 
-        
+            /*
         let headerView : UIImageView = UIImageView()
         headerView.image = #imageLiteral(resourceName: "earyikg21d4-maja-petric")
         headerView.contentMode = .scaleAspectFill
@@ -57,28 +60,40 @@ class StopViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.parallaxHeader.height = 200;
         tableView.parallaxHeader.mode = .fill
         tableView.parallaxHeader.minimumHeight = 0;
+        */
         
+        let closeButton  = DynamicButton(style: DynamicButtonStyle.arrowLeft)
+        closeButton.frame = CGRect(x: 0, y: 0, width: 38, height: 38)
+        closeButton.contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        closeButton.strokeColor = .gray
+        closeButton.addTarget(self, action: #selector(StopViewController.didTouchDismiss(_:)), for: .touchUpInside)
+        self.navigationItem.setLeftBarButton(UIBarButtonItem(customView: closeButton), animated: true)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setup()
+        updateUI()
         syncFirebase()
     }
-
-    func presenter() -> Presentr {
-        let presenter = Presentr(presentationType: PresentationType.custom(width: ModalSize.custom(size: Float(self.view.bounds.width)), height: ModalSize.custom(size: 300.0), center: ModalCenterPosition.bottomCenter))
-        presenter.transitionType = TransitionType.coverVertical
-        presenter.backgroundOpacity = 0
-        return presenter
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        ref?.removeAllObservers()
     }
+
     
     // MARK : - Firebase
     func syncFirebase() {
-        let ref = FIRDatabase.database().reference().child("routes").child(route.id).child("stops").child(stop.id).child("posts")
+        self.ref = FIRDatabase.database().reference().child("routes").child(route.id).child("stops").child(stop.id).child("posts")
+        self.posts = []
         
-        ref.queryOrderedByKey().observe(FIRDataEventType.childAdded) { (snap : FIRDataSnapshot) in
+        ref?.queryOrderedByKey().observe(FIRDataEventType.childAdded) { (snap : FIRDataSnapshot) in
             self.posts.insert(Post(snap: snap), at: 0)
             self.tableView.reloadData()
         }
-        ref.queryOrderedByKey().observe(FIRDataEventType.childChanged) { (snap : FIRDataSnapshot) in
+        ref?.queryOrderedByKey().observe(FIRDataEventType.childChanged) { (snap : FIRDataSnapshot) in
             let post = Post(snap: snap)
-            print(snap)
             for index in 0...(self.posts.count - 1) {
                 if self.posts[index].id == post.id {
                     self.posts[index] = post
@@ -86,9 +101,8 @@ class StopViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
             self.tableView.reloadData()
         }
-        ref.queryOrderedByKey().observe(FIRDataEventType.childRemoved) { (snap : FIRDataSnapshot) in
+        ref?.queryOrderedByKey().observe(FIRDataEventType.childRemoved) { (snap : FIRDataSnapshot) in
             let post = Post(snap: snap)
-            print(snap)
             for index in 0...(self.posts.count - 1) {
                 if self.posts[index].id == post.id {
                     self.posts.remove(at: index)
@@ -101,6 +115,7 @@ class StopViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK : - Table View
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
         return 1 + self.posts.count
     }
     
@@ -114,6 +129,18 @@ class StopViewController: UIViewController, UITableViewDelegate, UITableViewData
             cell?.updateUI(post : posts[indexPath.row - 1])
             return cell!
         }
+    }
+    
+    // MARK : - UI
+    func updateUI() {
+        self.navigationItem.title = self.stop.name
+
+        let closeButton  = DynamicButton(style: DynamicButtonStyle.arrowLeft)
+        closeButton.frame = CGRect(x: 0, y: 0, width: 38, height: 38)
+        closeButton.contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        closeButton.strokeColor = .gray
+        closeButton.addTarget(self, action: #selector(RouteMapViewController.didTouchDismiss(_:)), for: .touchUpInside)
+        self.navigationItem.setLeftBarButton(UIBarButtonItem(customView: closeButton), animated: true)
     }
     
     
@@ -140,10 +167,9 @@ class StopViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func keyboardWillShow(_ notification: NSNotification){
-        let screen = UIScreen.main.bounds
         let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
         self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (keyboardSize?.height)! + self.messageInputContainerView.frame.size.height, right: 0)
-         bottomConstraint?.constant = ((keyboardSize?.height)! * -1) + ((screen.height - (self.routeViewController?.view.bounds.height)! + 60)/2)
+         bottomConstraint?.constant = ((keyboardSize?.height)! * -1)
         
         UIView.animate(withDuration: 0, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
             self.view.layoutIfNeeded()
@@ -201,7 +227,7 @@ class StopViewController: UIViewController, UITableViewDelegate, UITableViewData
     func sendMessage() -> Void {
         if (self.inputTextField.text?.characters.count)! > 9 {
             var post = Post()
-            post.user = "Per Sonberg"
+            post.user = self.user.firstName + " " + self.user.lastName
             post.text = self.inputTextField.text!
             post.created = String(describing: Date())
             post.save(routeId: self.route.id, stopId: self.stop.id)

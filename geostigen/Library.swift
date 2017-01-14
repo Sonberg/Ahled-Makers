@@ -16,9 +16,6 @@ class Library {
         }
         return Static.instance
     }
-    
-    let images : [UIImage] = [#imageLiteral(resourceName: "01dsd.jpg"),#imageLiteral(resourceName: "01f.jpg"),#imageLiteral(resourceName: "02fss.jpg"),#imageLiteral(resourceName: "02sd.jpg"),#imageLiteral(resourceName: "4wfw.jpg"),#imageLiteral(resourceName: "89u.jpg"),#imageLiteral(resourceName: "as.jpg"),#imageLiteral(resourceName: "asa.jpg"),#imageLiteral(resourceName: "be.jpg"),#imageLiteral(resourceName: "dsd.jpg"),#imageLiteral(resourceName: "fd.jpg"),#imageLiteral(resourceName: "gwg.jpg"),#imageLiteral(resourceName: "gwgw.jpg"),#imageLiteral(resourceName: "jjio.jpg"),#imageLiteral(resourceName: "kj.jpg"),#imageLiteral(resourceName: "klö.jpg"),#imageLiteral(resourceName: "opi.jpg"),#imageLiteral(resourceName: "opti.jpg"),#imageLiteral(resourceName: "po.jpg"),#imageLiteral(resourceName: "sasda.jpg"),#imageLiteral(resourceName: "sds.jpg"),#imageLiteral(resourceName: "tregr.jpg"),#imageLiteral(resourceName: "vwv.jpg")]
-    
     let colors = [
         UIColor(red: 0.1, green: 0.74, blue: 0.61, alpha: 1),
         UIColor(red: 0.12, green: 0.81, blue: 0.43, alpha: 1),

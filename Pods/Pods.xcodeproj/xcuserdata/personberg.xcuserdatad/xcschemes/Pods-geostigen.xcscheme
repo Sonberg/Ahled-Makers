@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9611F937DF20CD0C43176A97028C7B90"
+               BlueprintIdentifier = "69C20F45F7F70430E6546EE005C7D31D"
                BuildableName = "Pods_geostigen.framework"
                BlueprintName = "Pods-geostigen"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9611F937DF20CD0C43176A97028C7B90"
+            BlueprintIdentifier = "69C20F45F7F70430E6546EE005C7D31D"
             BuildableName = "Pods_geostigen.framework"
             BlueprintName = "Pods-geostigen"
             ReferencedContainer = "container:Pods.xcodeproj">

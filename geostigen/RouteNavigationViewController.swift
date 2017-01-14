@@ -12,8 +12,8 @@ class RouteNavigationViewController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setNavigationBarHidden(true, animated: false)
-
+        self.hidesNavigationBarHairline = true
+        self.navigationBar.backgroundColor = .white
         // Do any additional setup after loading the view.
     }
 }

@@ -18,21 +18,27 @@
 import UIKit
 import MapKit
 import Spring
-import Presentr
+import BadgeSwift
 import FontAwesome_swift
 import DynamicButton
 import CoreLocation
+import BubbleTransition
 import FirebaseDatabase
 import TransitionTreasury
 import TransitionAnimation
 import UIImageView_Letters
 
-class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransitionDelegate, CLLocationManagerDelegate  {
+class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransitionDelegate, CLLocationManagerDelegate, UIViewControllerTransitioningDelegate  {
+    
+    /// Retain transition delegate.
+    public var tr_presentTransition: TRViewControllerTransitionDelegate?
+
     
     // MARK : - Outlets
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var scrollViewTopContraint: NSLayoutConstraint!
+    @IBOutlet weak var progressView: UIProgressView!
     
     
     // MARK : - Actions
@@ -40,95 +46,142 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
         print("edit")
     }
     
+    func didTouchDismiss(_ sender : Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     
     // MARK : - Variables
-    var tr_presentTransition : TRViewControllerTransitionDelegate?
-    var routeViewController : RouteViewController?
     var locationManager : CLLocationManager!
+    let transition = BubbleTransition()
+    var ref : FIRDatabaseReference?
     var user : User = User()
     var stops : [SpringImageView] = []
     var route : Route = Route()
     let regionRadius : Int = 100
     
-    let presenter: Presentr = {
-        let presenter = Presentr(presentationType: .alert)
-        presenter.transitionType = .coverHorizontalFromRight // Optional
-        return presenter
-    }()
+    deinit {
+        print("Route Map View controller hade been deinit")
+    }
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.progressView.removeConstraints(self.progressView.constraints)
         mapView.delegate = self
-        if self.user.type == .admin {
-            initStops()
-        }
         updateUI()
-        syncFirebase()
         location()
+        
+        self.scrollView.alpha = 0
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         updateUI()
-        UIView.animate(withDuration: 0.3, delay: 0, animations: {
-            self.scrollViewTopContraint.constant = self.view.bounds.height - 80
-        })
+        initStops()
+        syncFirebase()
         
-        if self.routeViewController != nil {
-            self.routeViewController?.closeButton?.setStyle(DynamicButtonStyle.close, animated: true)
-        }
+        self.scrollViewTopContraint.constant = self.view.bounds.height - 170
+        self.scrollView.alpha = 1
+        self.scrollView.isPagingEnabled = true
+    
+        //self.routeViewDelegate?.changeCloseButtonIcon(type: DynamicButtonStyle.close)
 
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         locationManager.stopUpdatingLocation()
+        self.ref?.removeAllObservers()
     }
 
     
     
     //MARK : - UI
     func updateUI() {
-        self.routeViewController?.navigationBar.topItem?.title = self.route.name
+        self.progressView.trackTintColor = Library.sharedInstance.colors[self.route.color].lighten(byPercentage: 0.6)
+        self.progressView.progressTintColor = Library.sharedInstance.colors[self.route.color]
+        self.navigationItem.title = self.route.name
         let edit = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-        edit.setImage(UIImage.fontAwesomeIcon(name: .edit, textColor: Library.sharedInstance.colors[4], size: CGSize(width: 30, height: 30)), for: .normal)
+        edit.setImage(UIImage.fontAwesomeIcon(.edit, textColor: Library.sharedInstance.colors[4], size: CGSize(width: 30, height: 30)), for: .normal)
         edit.addTarget(self, action: #selector(didTouchEditStops(_:)), for: .touchUpInside)
-        self.routeViewController?.navigationBar.topItem?.rightBarButtonItems = [UIBarButtonItem(customView: edit)]
+        self.navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: edit)]
+        
+        let closeButton  = DynamicButton(style: DynamicButtonStyle.arrowLeft)
+        closeButton.frame = CGRect(x: 0, y: 0, width: 38, height: 38)
+        closeButton.contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        closeButton.strokeColor = .gray
+        closeButton.addTarget(self, action: #selector(RouteMapViewController.didTouchDismiss(_:)), for: .touchUpInside)
+        self.navigationItem.setLeftBarButton(UIBarButtonItem(customView: closeButton), animated: true)
     }
     
     
     // MARK : - Firebase
     func syncFirebase() {
-        let ref = FIRDatabase.database().reference().child("routes").child(self.route.id).child("stops")
-        ref.queryOrderedByKey().observe(FIRDataEventType.childAdded) { (snap : FIRDataSnapshot) in
+        
+        self.ref = FIRDatabase.database().reference().child("routes").child(self.route.id).child("stops")
+        ref?.queryOrderedByKey().observe(FIRDataEventType.childAdded) { (snap : FIRDataSnapshot) in
             var stop = Stop(snap: snap)
             stop.number = self.route.stops.count + 1
             
-            if stop.lat != Double(0) && stop.long != Double(0) {
-                let location = CLLocationCoordinate2DMake(stop.lat, stop.long)
-                let annotation = MKPointAnnotation()
-                
-                annotation.coordinate = location;
-                annotation.title = stop.name;
-                
-                if !CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) {
+            // Add If it doesnt exists
+            if self.mapView.annotations.contains(where: { (anno: MKAnnotation) -> Bool in
+                let lat : Double = anno.coordinate.latitude
+                let long : Double = anno.coordinate.longitude
+                if lat == stop.lat && long == stop.long {
+                    return true
+                }
+                return false
+            }) == false {
+                if stop.lat != Double(0) && stop.long != Double(0) {
+                    let location = CLLocationCoordinate2DMake(stop.lat, stop.long)
+                    let annotation = MKPointAnnotation()
+                    let circleOverlay: MKCircle = MKCircle(center: location, radius: 100)
+                    
+                    
+                    annotation.coordinate = location;
+                    annotation.title = stop.name;
+                    
+                    if !CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) {
+                        stop.isLocked = false
+                    }
+                    
+                    self.mapView.addAnnotation(annotation)
+                    self.mapView.add(circleOverlay)
+                    
+                    if self.route.createdBy == self.user.id {
+                        stop.isLocked = false
+                    }
+                } else {
                     stop.isLocked = false
                 }
-                
-                self.mapView.addAnnotation(annotation)
-                
-                if self.route.createdBy == self.user.id {
-                    stop.isLocked = false
-                }
-            } else {
-                stop.isLocked = false
             }
             
-            self.route.stops.append(stop)
-            self.addStop(stop: stop)
+                // Add If it doesnt exists
+                if self.route.stops.contains(where: { (s: Stop) -> Bool in
+                    if s.id == stop.id {
+                    return true
+                    }
+                    return false
+                }) == false {
+                    self.route.stops.append(stop)
+                }
+            
+            if self.stops.contains(where: { (spring : SpringImageView) -> Bool in
+                if (spring.accessibilityHint != nil) && spring.accessibilityHint! == stop.id {
+                    return true
+                }
+                
+                return false
+            }) == false {
+                self.addStop(stop: stop)
+            }
+            
+            
+                self.locationManager.startUpdatingLocation()
+
         }
-        ref.queryOrderedByKey().observe(FIRDataEventType.childChanged) { (snap : FIRDataSnapshot) in
+        ref?.queryOrderedByKey().observe(FIRDataEventType.childChanged) { (snap : FIRDataSnapshot) in
             let stop = Stop(snap: snap)
             for index in 0...(self.route.stops.count - 1) {
                 if self.route.stops[index].id == stop.id {
@@ -136,9 +189,8 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
                 }
             }
         }
-        ref.queryOrderedByKey().observe(FIRDataEventType.childRemoved) { (snap : FIRDataSnapshot) in
+        ref?.queryOrderedByKey().observe(FIRDataEventType.childRemoved) { (snap : FIRDataSnapshot) in
             let stop = Stop(snap: snap)
-            print(snap)
             for index in 0...(self.route.stops.count - 1) {
                 if self.route.stops[index].id == stop.id {
                     self.route.stops.remove(at: index)
@@ -156,14 +208,8 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
                 finnish = finnish + 1
             }
         }
-        
-        print(finnish/all)
-        if self.routeViewController != nil {
-            print("setting progress")
-            print(CGFloat(finnish)/CGFloat(all))
-            self.routeViewController?.setProgress(float: CGFloat(finnish)/CGFloat(all))
-        }
-        
+        self.progressView.progress = Float(finnish)/Float(all)
+        //self.routeViewDelegate?.didUpdateProgress(progress: )
     }
     
     // MARK : - Screen orientation
@@ -178,7 +224,7 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
         self.scrollView.contentInset.left = CGFloat(Int(self.view.bounds.width) / 2 - width / 2)
         
         UIView.animate(withDuration: 0.3, delay: 0, animations: {
-            self.scrollViewTopContraint.constant = self.view.bounds.height - 80
+            self.scrollViewTopContraint.constant = self.view.bounds.height - 170
             for stop in self.stops {
                 stop.alpha = 1
             }
@@ -196,7 +242,7 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
             let view = self.stops[i]
             if self.isEditingStops {
                 if (view.accessibilityHint != nil) {
-                    sender.setImage(UIImage.fontAwesomeIcon(name: .times, textColor: Library.sharedInstance.colors[4], size: CGSize(width: 30, height: 30)), for: .normal)
+                    sender.setImage(UIImage.fontAwesomeIcon(.times, textColor: Library.sharedInstance.colors[4], size: CGSize(width: 30, height: 30)), for: .normal)
                     view.animation = "squeeze"
                     view.duration = 1
                     view.delay = 1
@@ -206,7 +252,7 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
             } else {
                 view.repeatCount = 0
                 view.layer.removeAllAnimations()
-                sender.setImage(UIImage.fontAwesomeIcon(name: .edit, textColor: Library.sharedInstance.colors[4], size: CGSize(width: 30, height: 30)), for: .normal)
+                sender.setImage(UIImage.fontAwesomeIcon(.edit, textColor: Library.sharedInstance.colors[4], size: CGSize(width: 30, height: 30)), for: .normal)
                 
             }
         }
@@ -216,21 +262,25 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
     func userDidEnterRegionFor(index: Int) {
         print("In position")
         let stop = self.route.stops[index]
+        self.selectedStop = stop
         self.route.stops[index].isLocked = false
         if self.route.createdBy != self.user.id && self.route.stops[index].visitedBy.index(of: self.user.id) == nil {
             self.route.stops[index].visitedBy.append(self.user.id)
             self.route.stops[index].save(parentId: self.route.id)
         }
-        print(self.route.stops[index].visitedBy)
         for i in 0...(self.scrollView.subviews.count - 1) {
             if self.scrollView.subviews[i].accessibilityHint == stop.id {
                 let view = self.scrollView.subviews[i] as! SpringImageView
                 let when = DispatchTime.now() + 1
                 DispatchQueue.main.asyncAfter(deadline: when) {
-                    print("setting")
                     view.setImageWith(String(index + 1), color: Library.sharedInstance.colors[4], circular: true)
-                    //view.animation = "pop"
-                    //view.animate()
+                    view.animation = "pop"
+                    view.animate()
+                    if stop.isNew {
+                        print("adding badge")
+                    }
+                    self.performSegue(withIdentifier: "unlockSegue", sender: self)
+                    
                 }
             }
         }
@@ -281,7 +331,6 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
     }
     
     func addStop(stop : Stop) {
-        print(stop)
         var offset = 0
         if self.user.type == .admin {
             offset = 1
@@ -292,7 +341,7 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(RouteMapViewController.stopTapped(sender:)))
         tapGesture.accessibilityHint = stop.id
          if stop.isLocked && self.user.id != self.route.createdBy && stop.visitedBy.index(of: self.user.id) == nil {
-            image.setImageWith(String.fontAwesomeIcon(name: .lock), color: Library.sharedInstance.colors[self.route.color], circular: true, textAttributes: [ NSFontAttributeName: UIFont.fontAwesome(ofSize: 30), NSForegroundColorAttributeName: UIColor.white ])
+            image.setImageWith(String.fontAwesomeIcon(.lock), color: Library.sharedInstance.colors[self.route.color], circular: true, textAttributes: [ NSFontAttributeName: UIFont.fontAwesome(ofSize: 30), NSForegroundColorAttributeName: UIColor.white ])
          } else {
             let update = self.route.stops.index(where: { (new : Stop) -> Bool in
                 if new.id == stop.id {
@@ -302,19 +351,13 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
             })
             self.route.stops[update!].isLocked = false
             
-            image.setImageWith(String(index + 1), color: Library.sharedInstance.colors[self.route.color], circular: true)
+            image.setImageWith(String(index), color: Library.sharedInstance.colors[self.route.color], circular: true)
         }
-        
-        //self.route.stops[index].image = image.image
-        
-        /*
-         image.autohide = true
-         image.animation = "slideUp"
-         */
         
         image.accessibilityHint = stop.id
         image.isUserInteractionEnabled = true
         image.addGestureRecognizer(tapGesture)
+
         self.scrollView.addSubview(image)
         self.stops.append(image)
         
@@ -344,19 +387,7 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
         }
             // 2. authorization were denied
         else if CLLocationManager.authorizationStatus() == .denied {
-            let title = "Saknar tillåtelse"
-            let body = "Du har tidigare nekat applikationen tillgång till din position. För att kunna använda tjänsten måste du tillåta detta i applikationens inställningar"
             
-            let controller = Presentr.alertViewController(title: title, body: body)
-            let okAction = AlertAction(title: "Ok", style: .cancel) {
-                self.dismiss(animated: true, completion: nil)
-            }
-            
-            
-            controller.addAction(okAction)
-            
-            presenter.presentationType = .alert
-            customPresentViewController(presenter, viewController: controller, animated: true, completion: nil)
         }
             // 3. we do have authorization
         else if CLLocationManager.authorizationStatus() == .authorizedAlways {
@@ -372,22 +403,21 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if locations.last != nil {
-            mapView.showAnnotations(self.mapView.annotations, animated: true)
+            print("have location")
+            print(self.route.stops)
+            mapView.showAnnotations(self.mapView.annotations, animated: false)
             for annotation in self.mapView.annotations {
                 if annotation is MKUserLocation {} else {
-                    /*
-                     let a = MKMapPoint(x: (locations.last?.coordinate.latitude)!, y: (locations.last?.coordinate.longitude)!)
-                     let b = MKMapPoint(x: annotation.coordinate.latitude, y: annotation.coordinate.longitude)
-                     let meters = MKMetersBetweenMapPoints(a, b)
-                     print(meters)
-                     */
-                    
                     let dis = locations.last?.distance(from: CLLocation(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude))
                     if Int(dis as Double!) < self.regionRadius {
-                        for index : Int in 0...(self.stops.count - 1)  {
-                            let stop = self.route.stops[index]
-                            if stop.name == annotation.title! && stop.isLocked {
-                                userDidEnterRegionFor(index: index)
+                        if self.route.stops.count > 0 {
+                            for index : Int in 0...(self.route.stops.count - 1)  {
+                                let stop = self.route.stops[index]
+                                if stop.name == annotation.title! && stop.isLocked {
+                                    self.route.stops[index].isNew = true
+                                    self.selectedStop = stop
+                                    userDidEnterRegionFor(index: index)
+                                }
                             }
                         }
                     }
@@ -397,31 +427,64 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
         }
     }
     
+    // MARK : - Map View
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let circleView = MKCircleRenderer(overlay: overlay)
+        circleView.strokeColor = UIColor.clear
+        circleView.lineWidth = 0
+        circleView.fillColor = Library.sharedInstance.colors[self.route.color]
+        circleView.alpha = 0.4
+        return circleView
+    }
+    
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         isEditingStops = false
-        if segue.destination is StopViewController && self.routeViewController != nil {
+        if segue.destination is StopViewController  {
             let vc = segue.destination as! StopViewController
-            vc.routeViewController = self.routeViewController
             vc.route = self.route
             vc.stop = self.selectedStop
-            self.routeViewController?.closeButton?.setStyle(DynamicButtonStyle.arrowLeft, animated: true)
-            self.routeViewController?.navigationBar.topItem?.rightBarButtonItems = []
-
         }
         
-        if segue.destination is CreateStopViewController && self.routeViewController != nil {
+        if segue.destination is CreateStopViewController  {
             let vc = segue.destination as! CreateStopViewController
-            vc.routeViewController = self.routeViewController
             vc.route = self.route
             vc.stop = self.selectedStop
-            self.routeViewController?.closeButton?.setStyle(DynamicButtonStyle.arrowLeft, animated: true)
-            
+        }
+        
+        if segue.destination is UnlockedViewController {
+            let controller = segue.destination as! UnlockedViewController
+            controller.color = Library.sharedInstance.colors[self.route.color]
+            controller.stop = self.selectedStop
+            controller.transitioningDelegate = self
+            controller.modalPresentationStyle = .custom
+        
         }
         
         self.selectedStop = Stop()
+    }
+    
+    // MARK: UIViewControllerTransitioningDelegate
+    
+    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transition.transitionMode = .present
+        for annotation in self.mapView.annotations {
+            if annotation is MKUserLocation {
+                print(mapView.convert(annotation.coordinate, toPointTo: self.view))
+                transition.startingPoint = mapView.convert(annotation.coordinate, toPointTo: self.view)
+            }
+        }
+        transition.bubbleColor = Library.sharedInstance.colors[self.route.color]
+        return transition
+    }
+    
+    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transition.transitionMode = .dismiss
+        transition.startingPoint = mapView.convert(CLLocationCoordinate2D(latitude: self.selectedStop.lat, longitude: self.selectedStop.long), toPointTo: self.view)
+        transition.bubbleColor = Library.sharedInstance.colors[self.route.color]
+        return transition
     }
 
 

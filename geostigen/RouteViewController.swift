@@ -12,13 +12,21 @@ import DynamicButton
 import TransitionTreasury
 import TransitionAnimation
 
-class RouteViewController: UIViewController, LinearProgressDelegate {
+protocol RouteViewDelegate : class {
+    func setNavigationBarName(title: String)
+    func getViewHeight() -> CGFloat
+    func changeCloseButtonIcon(type : DynamicButtonStyle.Type)
+    func didUpdateProgress(progress : CGFloat)
+    func didChangeRightButtons(buttons : [UIBarButtonItem])
+    func didChangeLeftButtons(buttons : [UIBarButtonItem])
+}
+
+class RouteViewController: UIViewController, RouteViewDelegate {
 
     // MARK: - Outlet
     @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var headerTitle: UILabel!
     @IBOutlet weak var cardView: UIView!
-    @IBOutlet weak var progressBar: LinearProgressView!
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var progressView: UIProgressView!
     
@@ -27,7 +35,6 @@ class RouteViewController: UIViewController, LinearProgressDelegate {
     var closeButton : DynamicButton?
     var user : User = User()
     var route : Route = Route()
-    var routeNavigation : RouteNavigationViewController?
     
     func presenter() -> Presentr {
         let screen = UIScreen.main.bounds
@@ -66,18 +73,9 @@ class RouteViewController: UIViewController, LinearProgressDelegate {
         closeButton!.strokeColor = .gray
         closeButton!.addTarget(self, action: #selector(RouteViewController.dismissView), for: .touchUpInside)
         view.addSubview(closeButton!)
-        
-        // MARK: - Progress View
-        progressBar.delegate = self
   }
     
     func dismissView() -> Bool {
-        if self.routeNavigation != nil {
-            if self.routeNavigation?.visibleViewController is StopViewController || self.routeNavigation?.visibleViewController is CreateStopViewController {
-                self.routeNavigation?.popViewController(animated: true)
-                return true
-            }
-        }
         dismiss(animated: true, completion: nil)
         return true
     }
@@ -89,9 +87,32 @@ class RouteViewController: UIViewController, LinearProgressDelegate {
         }
     }
     
-    func didChangeProgress(fromValue from: Double, toValue to: Double) {
-        
+    // MARK : - RouteViewDelegate
+    func didUpdateProgress(progress: CGFloat) {
+        self.progressView.progress = Float(progress)
     }
+    
+    func didChangeRightButtons(buttons: [UIBarButtonItem]) {
+        self.navigationBar.topItem?.rightBarButtonItems = buttons
+
+    }
+    
+    func didChangeLeftButtons(buttons: [UIBarButtonItem]) {
+        self.navigationBar.topItem?.leftBarButtonItems = buttons
+    }
+    
+    func changeCloseButtonIcon(type: DynamicButtonStyle.Type) {
+        self.closeButton?.setStyle(type, animated: true)
+    }
+    
+    func getViewHeight() -> CGFloat {
+        return self.view.bounds.height
+    }
+    
+    func setNavigationBarName(title: String) {
+        self.navigationBar.topItem?.title = title
+    }
+
     
     // MARK: - Navigation
     
@@ -99,12 +120,10 @@ class RouteViewController: UIViewController, LinearProgressDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.destination is RouteNavigationViewController {
-            self.routeNavigation = segue.destination as? RouteNavigationViewController
-            let vc = self.routeNavigation?.viewControllers.first as? RouteMapViewController
-            vc?.routeViewController = self
+            let nav = segue.destination as? RouteNavigationViewController
+            let vc = nav?.viewControllers.first as? RouteMapViewController
             vc?.route = self.route
             vc?.user = self.user
-            print("send mytselft")
         }
     }
     

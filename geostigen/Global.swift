@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import CoreLocation
 import Firebase
 import Foundation
+import BadgeSwift
 import FirebaseAuth
 import SVProgressHUD
 
@@ -58,7 +60,32 @@ extension UIProgressView {
     }
 }
 
+extension UITableViewCell {
+    // Get string from coordinate
+    func getPlacemark(forLocation location: CLLocation, completionHandler: @escaping (CLPlacemark?, String?) -> ()) {
+        let geocoder = CLGeocoder()
+        
+        geocoder.reverseGeocodeLocation(location, completionHandler: {
+            placemarks, error in
+            
+            if let err = error {
+                completionHandler(nil, err.localizedDescription)
+            } else if let placemarkArray = placemarks {
+                if let placemark = placemarkArray.first {
+                    completionHandler(placemark, nil)
+                } else {
+                    completionHandler(nil, "Placemark was nil")
+                }
+            } else {
+                completionHandler(nil, "Unknown error")
+            }
+        })
+        
+    }
+}
+
 extension UIViewController {
+    
     
     // MARK : - User from Firebase
     func returnUserRef(completion: @escaping (User) -> Void) -> Void {
@@ -89,4 +116,49 @@ extension UIViewController {
     func hideSpinner() -> Void {
         SVProgressHUD.dismiss()
     }
+    
+    func positionBadge(_ badge: UIView) {
+        badge.translatesAutoresizingMaskIntoConstraints = false
+        var constraints = [NSLayoutConstraint]()
+        
+        // Center the badge vertically in its container
+        constraints.append(NSLayoutConstraint(
+            item: badge,
+            attribute: NSLayoutAttribute.centerY,
+            relatedBy: NSLayoutRelation.equal,
+            toItem: view,
+            attribute: NSLayoutAttribute.centerY,
+            multiplier: 1, constant: 0)
+        )
+        
+        // Center the badge horizontally in its container
+        constraints.append(NSLayoutConstraint(
+            item: badge,
+            attribute: NSLayoutAttribute.centerX,
+            relatedBy: NSLayoutRelation.equal,
+            toItem: view,
+            attribute: NSLayoutAttribute.centerX,
+            multiplier: 1, constant: 0)
+        )
+        
+        view.addConstraints(constraints)
+    }
 }
+
+extension UILabel {
+    convenience init(badgeText: String, color: UIColor = UIColor.red, fontSize: CGFloat = UIFont.smallSystemFontSize) {
+        self.init()
+        text = " \(badgeText) "
+        textColor = UIColor.white
+        backgroundColor = color
+        
+        font = UIFont.systemFont(ofSize: fontSize)
+        layer.cornerRadius = fontSize * CGFloat(0.6)
+        clipsToBounds = true
+        
+        translatesAutoresizingMaskIntoConstraints = false
+        addConstraint(NSLayoutConstraint(item: self, attribute: .width, relatedBy: .greaterThanOrEqual, toItem: self, attribute: .height, multiplier: 1, constant: 0))
+    }
+}
+
+

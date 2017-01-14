@@ -23,16 +23,16 @@
 import UIKit
 
 /// A view for FontAwesome icons.
-@IBDesignable public class FontAwesomeView : UIView {
+@IBDesignable open class FontAwesomeView : UIView {
 
     @IBInspectable
-    public var iconCode:String = "" {
+    open var iconCode:String = "" {
         didSet{
-          self.iconView.text = String.fontAwesomeIcon(code: iconCode)
+          self.iconView.text = String.fontAwesomeIcon(iconCode)
         }
     }
 
-    private var iconView = UILabel()
+    fileprivate var iconView = UILabel()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -44,7 +44,7 @@ import UIKit
         setupViews()
     }
 
-    override public func prepareForInterfaceBuilder() {
+    override open func prepareForInterfaceBuilder() {
         setupViews()
     }
 
@@ -52,16 +52,16 @@ import UIKit
     func setupViews() {
         // Fits icon in the view
         self.iconView.textAlignment = NSTextAlignment.center
-        self.iconView.text = String.fontAwesomeIcon(code: self.iconCode)
+        self.iconView.text = String.fontAwesomeIcon(self.iconCode)
         self.iconView.textColor = self.tintColor
         self.addSubview(iconView)
     }
 
-    override public func tintColorDidChange() {
+    override open func tintColorDidChange() {
         self.iconView.textColor = self.tintColor
     }
 
-    override public func layoutSubviews() {
+    override open func layoutSubviews() {
         super.layoutSubviews()
         self.clipsToBounds = true
         self.iconView.font = UIFont.fontAwesome(ofSize: bounds.size.width < bounds.size.height ? bounds.size.width : bounds.size.height)

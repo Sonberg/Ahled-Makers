@@ -49,6 +49,7 @@ struct Stop {
     var posts : [Post] = []
     var visitedBy : [String] = []
     
+    var isNew : Bool = false
     var isLocked : Bool = true
     var image : UIImage?
     var color : String = ""

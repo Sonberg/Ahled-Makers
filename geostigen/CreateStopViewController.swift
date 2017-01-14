@@ -9,12 +9,12 @@
 import UIKit
 import Former
 import MapKit
+import DynamicButton
 
 class CreateStopViewController: FormViewController {
     
     // MARK : - Variable
     var user : User = User()
-    var routeViewController : RouteViewController?
     var route : Route = Route()
     var stop : Stop = Stop()
     var delete : UIBarButtonItem?
@@ -96,6 +96,8 @@ class CreateStopViewController: FormViewController {
         former.append(sectionFormer: mapRowSection, titleRowSection)
     }
     
+    
+    // MARK : - UI
     func updateUI() {
         self.navigationItem.title = ""
         
@@ -111,7 +113,13 @@ class CreateStopViewController: FormViewController {
         space.width = 30
 
         
-        self.routeViewController?.navigationBar.topItem?.rightBarButtonItems = [self.save!, space, self.delete!]
+        let closeButton  = DynamicButton(style: DynamicButtonStyle.arrowLeft)
+        closeButton.frame = CGRect(x: 0, y: 0, width: 38, height: 38)
+        closeButton.contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        closeButton.strokeColor = .gray
+        closeButton.addTarget(self, action: #selector(RouteMapViewController.didTouchDismiss(_:)), for: .touchUpInside)
+        self.navigationItem.setLeftBarButton(UIBarButtonItem(customView: closeButton), animated: true)
+        self.navigationItem.rightBarButtonItems = [self.save!, space, self.delete!]
         
     }
 

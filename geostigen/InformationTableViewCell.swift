@@ -19,7 +19,7 @@ class InformationTableViewCell: UITableViewCell {
     @IBOutlet weak var cardView: UIView!
     
     func updateUI(post : Post) {
-        thumbImage.setImageWith("PS", color: .black, circular: false)
+        thumbImage.setImageWith(String(describing: post.user.characters.first).uppercased(), color: .black, circular: false)
         nameLabel.text = post.user
         
         contentLabel.text = post.text

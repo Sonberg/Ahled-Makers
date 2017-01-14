@@ -35,11 +35,10 @@
 		89A6399E1E1FD15700A6CF8A /* InformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A6399D1E1FD15700A6CF8A /* InformationTableViewCell.swift */; };
 		89A639A01E1FD37500A6CF8A /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A6399F1E1FD37500A6CF8A /* Post.swift */; };
 		89A639A21E1FF96000A6CF8A /* TimeAgo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A639A11E1FF96000A6CF8A /* TimeAgo.swift */; };
+		89CC45191E2A1F62008F2BDD /* SmallCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CC45181E2A1F62008F2BDD /* SmallCardTableViewCell.swift */; };
+		89CC45211E2A576C008F2BDD /* UnlockedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CC45201E2A576C008F2BDD /* UnlockedViewController.swift */; };
 		89FB788D1E1BC86600CADE1E /* RouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB788C1E1BC86600CADE1E /* RouteViewController.swift */; };
 		89FB78911E1BE3F600CADE1E /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB78901E1BE3F600CADE1E /* Global.swift */; };
-		89FB78941E1BF63B00CADE1E /* StackGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB78921E1BF63B00CADE1E /* StackGrid.swift */; };
-		89FB78951E1BF63B00CADE1E /* StackGrid-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB78931E1BF63B00CADE1E /* StackGrid-Extensions.swift */; };
-		89FB78971E1C049100CADE1E /* LinearProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB78961E1C049100CADE1E /* LinearProgressView.swift */; };
 		89FB789C1E1C131000CADE1E /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB789B1E1C131000CADE1E /* Route.swift */; };
 		89FB789E1E1C131900CADE1E /* Stop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB789D1E1C131900CADE1E /* Stop.swift */; };
 		89FB78A01E1C1CDC00CADE1E /* StopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FB789F1E1C1CDC00CADE1E /* StopViewController.swift */; };
@@ -83,11 +82,10 @@
 		89A6399D1E1FD15700A6CF8A /* InformationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationTableViewCell.swift; sourceTree = "<group>"; };
 		89A6399F1E1FD37500A6CF8A /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		89A639A11E1FF96000A6CF8A /* TimeAgo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeAgo.swift; sourceTree = "<group>"; };
+		89CC45181E2A1F62008F2BDD /* SmallCardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmallCardTableViewCell.swift; sourceTree = "<group>"; };
+		89CC45201E2A576C008F2BDD /* UnlockedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnlockedViewController.swift; sourceTree = "<group>"; };
 		89FB788C1E1BC86600CADE1E /* RouteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteViewController.swift; sourceTree = "<group>"; };
 		89FB78901E1BE3F600CADE1E /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
-		89FB78921E1BF63B00CADE1E /* StackGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StackGrid.swift; sourceTree = "<group>"; };
-		89FB78931E1BF63B00CADE1E /* StackGrid-Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StackGrid-Extensions.swift"; sourceTree = "<group>"; };
-		89FB78961E1C049100CADE1E /* LinearProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinearProgressView.swift; sourceTree = "<group>"; };
 		89FB789B1E1C131000CADE1E /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		89FB789D1E1C131900CADE1E /* Stop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stop.swift; sourceTree = "<group>"; };
 		89FB789F1E1C1CDC00CADE1E /* StopViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StopViewController.swift; sourceTree = "<group>"; };
@@ -163,6 +161,7 @@
 				89A6398D1E1E623F00A6CF8A /* Create Form */,
 				89FB78A51E1D503700CADE1E /* Stop */,
 				894C69661E1BB81C001ECB6D /* CardTableViewCell.swift */,
+				89CC45181E2A1F62008F2BDD /* SmallCardTableViewCell.swift */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -212,6 +211,7 @@
 				89FB789F1E1C1CDC00CADE1E /* StopViewController.swift */,
 				89A639851E1E56C700A6CF8A /* CreateViewController.swift */,
 				89A639961E1EB16500A6CF8A /* CreateStopViewController.swift */,
+				89CC45201E2A576C008F2BDD /* UnlockedViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -219,9 +219,6 @@
 		89FB789A1E1C12F500CADE1E /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				89FB78961E1C049100CADE1E /* LinearProgressView.swift */,
-				89FB78921E1BF63B00CADE1E /* StackGrid.swift */,
-				89FB78931E1BF63B00CADE1E /* StackGrid-Extensions.swift */,
 				89FB78901E1BE3F600CADE1E /* Global.swift */,
 				89A639A11E1FF96000A6CF8A /* TimeAgo.swift */,
 				8975E3511E23E132007B1E2F /* Enum.swift */,
@@ -381,6 +378,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89CC45191E2A1F62008F2BDD /* SmallCardTableViewCell.swift in Sources */,
 				8975E34C1E23DD36007B1E2F /* LoginViewController.swift in Sources */,
 				89A6399C1E1ED66B00A6CF8A /* MapCell.swift in Sources */,
 				89FB78A41E1CDC9600CADE1E /* RouteNavigationViewController.swift in Sources */,
@@ -390,6 +388,7 @@
 				89FB78A01E1C1CDC00CADE1E /* StopViewController.swift in Sources */,
 				89A639861E1E56C700A6CF8A /* CreateViewController.swift in Sources */,
 				8975E3521E23E132007B1E2F /* Enum.swift in Sources */,
+				89CC45211E2A576C008F2BDD /* UnlockedViewController.swift in Sources */,
 				8975E3501E23DF02007B1E2F /* User.swift in Sources */,
 				89303B0B1E0D437400FFDF38 /* ViewController.swift in Sources */,
 				89FB78A21E1CD8FD00CADE1E /* RouteMapViewController.swift in Sources */,
@@ -401,12 +400,9 @@
 				89A639971E1EB16500A6CF8A /* CreateStopViewController.swift in Sources */,
 				89303B091E0D437400FFDF38 /* AppDelegate.swift in Sources */,
 				894C69671E1BB81C001ECB6D /* CardTableViewCell.swift in Sources */,
-				89FB78941E1BF63B00CADE1E /* StackGrid.swift in Sources */,
 				89FB789E1E1C131900CADE1E /* Stop.swift in Sources */,
 				89A6399E1E1FD15700A6CF8A /* InformationTableViewCell.swift in Sources */,
-				89FB78971E1C049100CADE1E /* LinearProgressView.swift in Sources */,
 				8975E34E1E23DD62007B1E2F /* SignupViewController.swift in Sources */,
-				89FB78951E1BF63B00CADE1E /* StackGrid-Extensions.swift in Sources */,
 				89A639A21E1FF96000A6CF8A /* TimeAgo.swift in Sources */,
 				89A6398C1E1E623700A6CF8A /* ProfileImageCell.swift in Sources */,
 				89FB78911E1BE3F600CADE1E /* Global.swift in Sources */,
@@ -545,7 +541,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = K4643C7U42;
 				INFOPLIST_FILE = geostigen/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = personberg.geostigen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -561,7 +557,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = K4643C7U42;
 				INFOPLIST_FILE = geostigen/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = personberg.geostigen;
 				PRODUCT_NAME = "$(TARGET_NAME)";

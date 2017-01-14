@@ -9,7 +9,6 @@
 import UIKit
 import Former
 import Photos
-import SideMenu
 
 
 class CreateViewController: FormViewController {
@@ -40,10 +39,17 @@ class CreateViewController: FormViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    deinit {
+        print("Sidebar View controller hade been deinit")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.updateUI()
         self.tableView.contentInset = UIEdgeInsets(top: 32, left: 0, bottom: 0, right: 0)
+        if self.route.createdBy == "" {
+            self.route.createdBy = self.user.id
+        }
         
         
         
@@ -80,7 +86,7 @@ class CreateViewController: FormViewController {
         }
         
         let imageListRow = CustomRowFormer<ImageListCell>(instantiateType: .Nib(nibName: "ImageListCell")) {
-            $0.images = Library.sharedInstance.images
+            //$0.images = Library.sharedInstance.images
             if self.route.image > -1 {
                 $0.select(item: self.route.image)
             } else {
@@ -113,8 +119,8 @@ class CreateViewController: FormViewController {
                     $0.text = text
             }
         }
-        
-        let imageSection = SectionFormer(rowFormer: imageListRow, colorListRow)
+        //imageListRow
+        let imageSection = SectionFormer(rowFormer: colorListRow)
             .set(headerViewFormer: createHeader("Omslagsbild & primärfärg"))
         
         
