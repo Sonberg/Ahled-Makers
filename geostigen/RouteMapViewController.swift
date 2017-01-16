@@ -413,7 +413,8 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
                         if self.route.stops.count > 0 {
                             for index : Int in 0...(self.route.stops.count - 1)  {
                                 let stop = self.route.stops[index]
-                                if stop.name == annotation.title! && stop.isLocked {
+                                //&& stop.isLocked
+                                if stop.name == annotation.title! {
                                     self.route.stops[index].isNew = true
                                     self.selectedStop = stop
                                     userDidEnterRegionFor(index: index)
