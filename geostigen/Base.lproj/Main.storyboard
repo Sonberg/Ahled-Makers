@@ -75,11 +75,8 @@
                                                                 <constraint firstItem="I1H-eb-R7y" firstAttribute="top" secondItem="ZIO-WH-yI7" secondAttribute="top" constant="23" id="rjr-OM-25y"/>
                                                             </constraints>
                                                         </view>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BZY-p5-9ty">
-                                                            <rect key="frame" x="8" y="75" width="54" height="22"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="54" id="3ph-Df-coL"/>
-                                                            </constraints>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BZY-p5-9ty">
+                                                            <rect key="frame" x="8" y="75" width="736" height="61"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -87,12 +84,13 @@
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="bottom" secondItem="BZY-p5-9ty" secondAttribute="bottom" constant="47" id="G4s-Vd-FdY"/>
+                                                        <constraint firstItem="BZY-p5-9ty" firstAttribute="top" secondItem="ZIO-WH-yI7" secondAttribute="bottom" constant="8" symbolic="YES" id="5nc-Pe-dHv"/>
+                                                        <constraint firstItem="BZY-p5-9ty" firstAttribute="bottom" secondItem="lE8-4C-AD2" secondAttribute="bottomMargin" id="E1E-Le-4FG"/>
+                                                        <constraint firstItem="BZY-p5-9ty" firstAttribute="leading" secondItem="lE8-4C-AD2" secondAttribute="leadingMargin" id="GOF-mA-bK3"/>
                                                         <constraint firstAttribute="trailing" secondItem="ZIO-WH-yI7" secondAttribute="trailing" id="HsL-ng-SMt"/>
                                                         <constraint firstItem="ZIO-WH-yI7" firstAttribute="leading" secondItem="lE8-4C-AD2" secondAttribute="leading" id="Jfo-qN-siB"/>
-                                                        <constraint firstItem="BZY-p5-9ty" firstAttribute="leading" secondItem="lE8-4C-AD2" secondAttribute="leadingMargin" id="iNf-kD-flA"/>
                                                         <constraint firstItem="ZIO-WH-yI7" firstAttribute="top" secondItem="lE8-4C-AD2" secondAttribute="top" id="jtl-jh-40k"/>
-                                                        <constraint firstItem="BZY-p5-9ty" firstAttribute="top" secondItem="ZIO-WH-yI7" secondAttribute="bottom" constant="8" symbolic="YES" id="pKs-Dj-nQp"/>
+                                                        <constraint firstItem="BZY-p5-9ty" firstAttribute="centerX" secondItem="ZIO-WH-yI7" secondAttribute="centerX" id="m3T-Y2-9NF"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
@@ -207,7 +205,7 @@
         <scene sceneID="byL-a0-RLo">
             <objects>
                 <navigationController storyboardIdentifier="SideMenuNavigationController" id="tFL-VZ-Lk0" customClass="RouteNavigationViewController" customModule="geostigen" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="pne-km-qHt">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="pne-km-qHt">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -256,7 +254,7 @@
             <objects>
                 <navigationController storyboardIdentifier="mainNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="m4z-Zh-SUM" customClass="RouteNavigationViewController" customModule="geostigen" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="nA1-7W-90G">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="nA1-7W-90G">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

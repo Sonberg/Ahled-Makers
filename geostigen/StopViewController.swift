@@ -26,12 +26,29 @@ class StopViewController: UIViewController, UITableViewDelegate, UITableViewData
     var route : Route = Route()
     var stop : Stop = Stop()
     var posts : [Post] = []
+    let headerHeight : CGFloat = 400
     
     
     // MARK : - Actions
+    @IBAction func dismissView(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
     func didTouchDismiss(_ sender : Any) {
         print("touch")
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    func didTapHeader(_ sender : Any)  {
+        if self.tableView.parallaxHeader.height == self.headerHeight {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.tableView.parallaxHeader.height = ((self.tableView.parallaxHeader.view as! UIImageView).image?.size.height)!
+            })
+        
+        } else {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.tableView.parallaxHeader.height = self.headerHeight;
+            })
+        }
     }
     
     deinit {
@@ -49,18 +66,27 @@ class StopViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.estimatedRowHeight = 140
         tableView.setNeedsLayout()
         tableView.layoutIfNeeded()
-
-            /*
+        tableView.frame.origin = CGPoint(x: 0, y: 64)
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        tableView.parallaxHeader.height = 0;
+        
         let headerView : UIImageView = UIImageView()
-        headerView.image = #imageLiteral(resourceName: "earyikg21d4-maja-petric")
         headerView.contentMode = .scaleAspectFill
+        headerView.isUserInteractionEnabled = true
+        headerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(StopViewController.didTapHeader(_:))))
+        
+        self.stop.getImage { (image : UIImage) in
+            headerView.image = image
+            self.tableView.parallaxHeader.view = headerView;
+            self.tableView.parallaxHeader.mode = .fill
+            self.tableView.parallaxHeader.minimumHeight = 0;
+            UIView.animate(withDuration: 0.3, animations: {
+                self.tableView.parallaxHeader.height = self.headerHeight;
+            })
+
+        }
         
         
-        tableView.parallaxHeader.view = headerView;
-        tableView.parallaxHeader.height = 200;
-        tableView.parallaxHeader.mode = .fill
-        tableView.parallaxHeader.minimumHeight = 0;
-        */
         
         let closeButton  = DynamicButton(style: DynamicButtonStyle.arrowLeft)
         closeButton.frame = CGRect(x: 0, y: 0, width: 38, height: 38)
@@ -126,7 +152,7 @@ class StopViewController: UIViewController, UITableViewDelegate, UITableViewData
             return cell!
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "card", for: indexPath) as? InformationTableViewCell
-            cell?.updateUI(post : posts[indexPath.row - 1])
+            cell?.updateUI(route: route, post : posts[indexPath.row - 1])
             return cell!
         }
     }
@@ -168,7 +194,7 @@ class StopViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func keyboardWillShow(_ notification: NSNotification){
         let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
-        self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (keyboardSize?.height)! + self.messageInputContainerView.frame.size.height, right: 0)
+        //self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (keyboardSize?.height)! + self.messageInputContainerView.frame.size.height, right: 0)
          bottomConstraint?.constant = ((keyboardSize?.height)! * -1)
         
         UIView.animate(withDuration: 0, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
@@ -177,7 +203,7 @@ class StopViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func keyboardWillHide(_ notification: NSNotification){
-        self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        //self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         bottomConstraint?.constant = 0
         
         UIView.animate(withDuration: 0, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
@@ -188,6 +214,7 @@ class StopViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     fileprivate func setupInputComponents() {
         let topBorderView = UIView()
+        let sendButton = self.sendButton()
         topBorderView.backgroundColor = UIColor(white: 0.5, alpha: 0.5)
         sendButton.addTarget(self, action: #selector(sendMessage), for: UIControlEvents.touchUpInside)
         messageInputContainerView.addSubview(inputTextField)
@@ -204,13 +231,13 @@ class StopViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     
-    let sendButton: DynamicButton = {
+    func sendButton() -> DynamicButton {
         let button = DynamicButton(style: DynamicButtonStyle.caretRight)
-        button.strokeColor = #colorLiteral(red: 0.1418670714, green: 0.6769689322, blue: 0.5964415669, alpha: 1)
+        button.strokeColor = Library.sharedInstance.colors[self.route.color]
         button.contentEdgeInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         return button
-    }()
+    }
     
     let messageInputContainerView: UIView = {
         let view = UIView()

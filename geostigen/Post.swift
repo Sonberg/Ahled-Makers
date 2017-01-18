@@ -25,6 +25,7 @@ struct Post {
                 self.text = data["text"] as! String
             }
             
+            
             if data["created"] != nil {
                 self.created = data["created"] as! String
             }
@@ -35,9 +36,9 @@ struct Post {
     var user : String = ""
     var text : String = ""
     var created : String = ""
-
     
     func save(routeId : String, stopId : String)  {
+        print(self)
         var ref: FIRDatabaseReference!
         
         if self.id.characters.count > 0 {
@@ -57,7 +58,6 @@ struct Post {
         } else {
             ref.setValue(data)
         }
-        
     }
     
     func delete(routeId : String, stopId : String) {
@@ -66,3 +66,4 @@ struct Post {
         }
     }
 }
+

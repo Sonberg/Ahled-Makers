@@ -191,6 +191,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
+            print(tableView.rectForRow(at: indexPath))
+        
             self.performSegue(withIdentifier: "RouteMapSegue", sender: self)
         } else {
             self.showRoute(route: self.routes[indexPath.row])

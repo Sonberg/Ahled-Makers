@@ -58,7 +58,7 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
     var user : User = User()
     var stops : [SpringImageView] = []
     var route : Route = Route()
-    let regionRadius : Int = 100
+    let regionRadius : Int = 10
     
     deinit {
         print("Route Map View controller hade been deinit")
@@ -102,10 +102,20 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
         self.progressView.trackTintColor = Library.sharedInstance.colors[self.route.color].lighten(byPercentage: 0.6)
         self.progressView.progressTintColor = Library.sharedInstance.colors[self.route.color]
         self.navigationItem.title = self.route.name
+        
         let edit = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-        edit.setImage(UIImage.fontAwesomeIcon(.edit, textColor: Library.sharedInstance.colors[4], size: CGSize(width: 30, height: 30)), for: .normal)
+        edit.setImage(UIImage.fontAwesomeIcon(.edit, textColor:.gray, size: CGSize(width: 30, height: 30)), for: .normal)
         edit.addTarget(self, action: #selector(didTouchEditStops(_:)), for: .touchUpInside)
-        self.navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: edit)]
+        
+        let location = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        location.addTarget(self, action: #selector(RouteMapViewController.didTouchFindMe(_:)), for: .touchUpInside)
+        location.setImage(UIImage.fontAwesomeIcon(.locationArrow, textColor: .gray, size: CGSize(width: 30, height: 30)), for: .normal)
+        
+        if self.user.id == self.route.createdBy && self.user.type == .admin {
+            self.navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: location), UIBarButtonItem(customView: edit)]
+        } else {
+            self.navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: location)]
+        }
         
         let closeButton  = DynamicButton(style: DynamicButtonStyle.arrowLeft)
         closeButton.frame = CGRect(x: 0, y: 0, width: 38, height: 38)
@@ -136,7 +146,7 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
                 if stop.lat != Double(0) && stop.long != Double(0) {
                     let location = CLLocationCoordinate2DMake(stop.lat, stop.long)
                     let annotation = MKPointAnnotation()
-                    let circleOverlay: MKCircle = MKCircle(center: location, radius: 100)
+                    let circleOverlay: MKCircle = MKCircle(center: location, radius: CLLocationDistance(self.regionRadius))
                     
                     
                     annotation.coordinate = location;
@@ -242,7 +252,7 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
             let view = self.stops[i]
             if self.isEditingStops {
                 if (view.accessibilityHint != nil) {
-                    sender.setImage(UIImage.fontAwesomeIcon(.times, textColor: Library.sharedInstance.colors[4], size: CGSize(width: 30, height: 30)), for: .normal)
+                    sender.setImage(UIImage.fontAwesomeIcon(.times, textColor: .gray, size: CGSize(width: 30, height: 30)), for: .normal)
                     view.animation = "squeeze"
                     view.duration = 1
                     view.delay = 1
@@ -252,7 +262,7 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
             } else {
                 view.repeatCount = 0
                 view.layer.removeAllAnimations()
-                sender.setImage(UIImage.fontAwesomeIcon(.edit, textColor: Library.sharedInstance.colors[4], size: CGSize(width: 30, height: 30)), for: .normal)
+                sender.setImage(UIImage.fontAwesomeIcon(.edit, textColor: .gray, size: CGSize(width: 30, height: 30)), for: .normal)
                 
             }
         }
@@ -273,7 +283,7 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
                 let view = self.scrollView.subviews[i] as! SpringImageView
                 let when = DispatchTime.now() + 1
                 DispatchQueue.main.asyncAfter(deadline: when) {
-                    view.setImageWith(String(index + 1), color: Library.sharedInstance.colors[4], circular: true)
+                    view.setImageWith(String(index + 1), color: Library.sharedInstance.colors[self.route.color], circular: true)
                     view.animation = "pop"
                     view.animate()
                     if stop.isNew {
@@ -287,27 +297,29 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
     }
     
     func initStops() {
-        self.appendButton = SpringImageView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(RouteMapViewController.stopTapped(sender:)))
-        
-        self.appendButton?.autohide = true
-        self.appendButton?.animation = "slideUp"
-        self.appendButton?.setImageWith("+", color: Library.sharedInstance.colors[self.route.color].withAlphaComponent(0.6), circular: true)
-        self.appendButton?.isUserInteractionEnabled = true
-        self.appendButton?.addGestureRecognizer(tapGesture)
-        self.scrollView.addSubview(self.appendButton!)
-        self.stops.insert(self.appendButton!, at: 0)
-        
-        let width = 80
-        let leftInset : CGFloat = CGFloat(Int(self.view.bounds.width) / 2 - width / 2)
-        print(self.view.bounds.width)
-        print(leftInset)
-        if self.route.stops.count == 0 {
-            UIView.animate(withDuration: 0.1, delay: 0.1 * Double(0), animations: {
-                self.scrollView.contentInset.left = leftInset
-            }, completion: { (finnish : Bool) in
-                //image.animate()
-            })
+        if self.user.id == self.route.createdBy && self.user.type == .admin {
+            self.appendButton = SpringImageView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(RouteMapViewController.stopTapped(sender:)))
+            
+            self.appendButton?.autohide = true
+            self.appendButton?.animation = "slideUp"
+            self.appendButton?.setImageWith("+", color: Library.sharedInstance.colors[self.route.color].withAlphaComponent(0.6), circular: true)
+            self.appendButton?.isUserInteractionEnabled = true
+            self.appendButton?.addGestureRecognizer(tapGesture)
+            self.scrollView.addSubview(self.appendButton!)
+            self.stops.insert(self.appendButton!, at: 0)
+            
+            let width = 80
+            let leftInset : CGFloat = CGFloat(Int(self.view.bounds.width) / 2 - width / 2)
+            print(self.view.bounds.width)
+            print(leftInset)
+            if self.route.stops.count == 0 {
+                UIView.animate(withDuration: 0.1, delay: 0.1 * Double(0), animations: {
+                    self.scrollView.contentInset.left = leftInset
+                }, completion: { (finnish : Bool) in
+                    //image.animate()
+                })
+            }
         }
     }
     
@@ -332,7 +344,7 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
     
     func addStop(stop : Stop) {
         var offset = 0
-        if self.user.type == .admin {
+        if self.user.type == .admin && self.user.id == self.route.createdBy {
             offset = 1
         } 
         
@@ -369,6 +381,10 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
     
     
     // MARK : - Location
+    func didTouchFindMe(_ sender : Any) {
+        self.mapView.showAnnotations(self.mapView.annotations, animated: true)
+    }
+    
     func location() {
         print("location")
         locationManager = CLLocationManager()
@@ -414,7 +430,7 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
                             for index : Int in 0...(self.route.stops.count - 1)  {
                                 let stop = self.route.stops[index]
                                 //&& stop.isLocked
-                                if stop.name == annotation.title! {
+                                if stop.name == annotation.title! && stop.isLocked {
                                     self.route.stops[index].isNew = true
                                     self.selectedStop = stop
                                     userDidEnterRegionFor(index: index)
@@ -445,6 +461,7 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
         isEditingStops = false
         if segue.destination is StopViewController  {
             let vc = segue.destination as! StopViewController
+            vc.user = self.user
             vc.route = self.route
             vc.stop = self.selectedStop
         }

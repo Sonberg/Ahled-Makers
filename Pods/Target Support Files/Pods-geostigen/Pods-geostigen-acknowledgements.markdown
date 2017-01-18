@@ -148,6 +148,10 @@ Copyright 2016 Google
 
 Copyright 2016 Google
 
+## FirebaseStorage
+
+Copyright 2016 Google
+
 ## FontAwesome.swift
 
 Copyright (c) 2014-present FontAwesome.swift contributors

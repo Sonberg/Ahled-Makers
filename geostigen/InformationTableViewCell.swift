@@ -18,8 +18,15 @@ class InformationTableViewCell: UITableViewCell {
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var cardView: UIView!
     
-    func updateUI(post : Post) {
-        thumbImage.setImageWith(String(describing: post.user.characters.first).uppercased(), color: .black, circular: false)
+    func updateUI(route : Route, post : Post) {
+        print(post.user)
+
+        if post.user.characters.count > 0 {
+            let initials : String = (post.user.characters.first?.description)!
+            thumbImage.setImageWith(initials, color: Library.sharedInstance.colors[route.color], circular: false)
+        }
+    
+ 
         nameLabel.text = post.user
         
         contentLabel.text = post.text

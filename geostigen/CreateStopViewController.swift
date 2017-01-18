@@ -10,15 +10,19 @@ import UIKit
 import Former
 import MapKit
 import DynamicButton
+import CoreLocation
 
-class CreateStopViewController: FormViewController {
+class CreateStopViewController: FormViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate {
     
     // MARK : - Variable
+    var locationManager : CLLocationManager!
     var user : User = User()
     var route : Route = Route()
     var stop : Stop = Stop()
     var delete : UIBarButtonItem?
     var save : UIBarButtonItem?
+    
+    var MapRow : CustomRowFormer<MapCell>?
     
     // MARK : - Actions
     func didTouchSave(_ sender : Any) {
@@ -36,13 +40,34 @@ class CreateStopViewController: FormViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
+    fileprivate lazy var imageRow: LabelRowFormer<ProfileImageCell> = {
+        LabelRowFormer<ProfileImageCell>(instantiateType: .Nib(nibName: "ProfileImageCell")) {
+            let cell = $0
+            $0.iconView.image = UIImage()
+            
+            if self.stop.url.characters.count > 0 {
+                self.stop.getImage { (image : UIImage) in
+                    cell.iconView.image = image
+                }
+            }
+            }.configure {
+                $0.text = "Välj bild från biblioteket"
+                $0.rowHeight = 60
+            }.onSelected { [weak self] _ in
+                self?.former.deselect(animated: true)
+                self?.presentImagePicker()
+        }
+    }()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.updateUI()
-        self.tableView.contentInset = UIEdgeInsets(top: 32, left: 0, bottom: 0, right: 0)
+        self.setupLocation()
+        tableView.frame.origin = CGPoint(x: 0, y: 64)
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         
-        let MapRow = CustomRowFormer<MapCell>(instantiateType: .Nib(nibName: "MapCell")) {
+        self.MapRow = CustomRowFormer<MapCell>(instantiateType: .Nib(nibName: "MapCell")) {
             print(self.stop.lat)
             $0.location = CLLocationCoordinate2D(latitude: self.stop.lat, longitude: self.stop.long)
             
@@ -86,14 +111,17 @@ class CreateStopViewController: FormViewController {
         }
         
         
-        let mapRowSection = SectionFormer(rowFormer: MapRow)
+        let mapRowSection = SectionFormer(rowFormer: MapRow!)
             .set(headerViewFormer: createHeader("", 0))
         
+        let imageRowSection = SectionFormer(rowFormer: imageRow)
+            .set(headerViewFormer: createHeader("", 6))
+        
         let titleRowSection = SectionFormer(rowFormer: titleRow, descRow)
-            .set(headerViewFormer: createHeader("", 10))
+            .set(headerViewFormer: createHeader("", 12))
         
         
-        former.append(sectionFormer: mapRowSection, titleRowSection)
+        former.append(sectionFormer: mapRowSection, imageRowSection, titleRowSection)
     }
     
     
@@ -117,10 +145,61 @@ class CreateStopViewController: FormViewController {
         closeButton.frame = CGRect(x: 0, y: 0, width: 38, height: 38)
         closeButton.contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
         closeButton.strokeColor = .gray
-        closeButton.addTarget(self, action: #selector(RouteMapViewController.didTouchDismiss(_:)), for: .touchUpInside)
+        closeButton.addTarget(self, action: #selector(CreateStopViewController.didTouchClose(_:)), for: .touchUpInside)
         self.navigationItem.setLeftBarButton(UIBarButtonItem(customView: closeButton), animated: true)
-        self.navigationItem.rightBarButtonItems = [self.save!, space, self.delete!]
+        
+        if self.stop.id.characters.count > 0 {
+            self.navigationItem.rightBarButtonItems = [self.save!, space, self.delete!]
+        } else {
+            self.navigationItem.rightBarButtonItems = [self.save!]
+        }
         
     }
+    
+    private func presentImagePicker() {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.sourceType = .photoLibrary
+        picker.allowsEditing = false
+        present(picker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage{
+            picker.dismiss(animated: true, completion: nil)
+            self.imageRow.cell.iconView.image = pickedImage
+            self.stop.image = pickedImage
+            imageRow.cellUpdate {
+                self.stop.image = pickedImage
+                $0.iconView.image = pickedImage
+            }
+        }
+    }
+    
+    // MARK : - Location
+    func setupLocation() {
+        locationManager = CLLocationManager()
+        locationManager.requestAlwaysAuthorization()
+        locationManager.requestWhenInUseAuthorization()
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        var location = locations.last! as CLLocation
+        
+        if self.stop.lat != 0 {
+            location = CLLocation(latitude: self.stop.lat, longitude: self.stop.long)
+        }
+            
+        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+        self.MapRow?.cell.mapView.setRegion(region, animated: true)
+    }
+    
 
 }
+

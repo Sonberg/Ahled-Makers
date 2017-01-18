@@ -35,7 +35,12 @@ class CardTableViewCell: UITableViewCell {
         headerView.backgroundColor = Library.sharedInstance.colors[route.color].withAlphaComponent(0.8)
         nameLabel.text = route.name
         nameLabel.textColor = UIColor(contrastingBlackOrWhiteColorOn: Library.sharedInstance.colors[route.color], isFlat: true)
-        descLabel.text = route.desc
+        
+        if route.desc.characters.count > 0 {
+            descLabel.text = route.desc
+        } else {
+            descLabel.frame.size.height = 0
+        }
         cardView.backgroundColor = .white
         cardView.layer.cornerRadius = 3.0
         cardView.layer.masksToBounds = false

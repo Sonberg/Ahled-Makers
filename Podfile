@@ -9,6 +9,7 @@ target 'geostigen' do
  # pod "Koloda”, :git => ”https://github.com/Yalantis/Koloda.git”, :branch => ”swift-3”
 pod 'Firebase/Core'
 pod ’Firebase/Auth’
+pod ’Firebase/Storage’
 pod 'Firebase/Database'
 pod 'TransitionTreasury', '~> 3.1.0’
 pod 'TransitionAnimation', '~> 3.1.0’

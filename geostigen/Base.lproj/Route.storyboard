@@ -195,7 +195,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="147" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0i3-cd-Yre">
-                                <rect key="frame" x="0.0" y="20" width="768" height="989"/>
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="1009"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="header" rowHeight="113" id="i3x-Mk-Ruo" customClass="HeaderTableViewCell" customModule="geostigen" customModuleProvider="target">
@@ -334,10 +334,10 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="rb6-ve-D1P" firstAttribute="top" secondItem="0i3-cd-Yre" secondAttribute="bottom" constant="15" id="0bP-Th-xhk"/>
-                            <constraint firstAttribute="trailing" secondItem="0i3-cd-Yre" secondAttribute="trailing" id="XMl-6u-tvX"/>
-                            <constraint firstItem="0i3-cd-Yre" firstAttribute="leading" secondItem="En5-iN-aeL" secondAttribute="leading" id="jIb-4V-I1B"/>
-                            <constraint firstItem="0i3-cd-Yre" firstAttribute="top" secondItem="afh-VG-LS8" secondAttribute="bottom" id="tjG-46-rsj"/>
+                            <constraint firstItem="0i3-cd-Yre" firstAttribute="top" secondItem="En5-iN-aeL" secondAttribute="top" id="L83-1f-76k"/>
+                            <constraint firstAttribute="trailing" secondItem="0i3-cd-Yre" secondAttribute="trailing" id="Vj0-y0-6rU"/>
+                            <constraint firstItem="rb6-ve-D1P" firstAttribute="top" secondItem="0i3-cd-Yre" secondAttribute="bottom" constant="15" id="kp7-n7-vW2"/>
+                            <constraint firstItem="0i3-cd-Yre" firstAttribute="leading" secondItem="En5-iN-aeL" secondAttribute="leading" id="lgT-ia-Jz3"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="LBx-7h-PFf" appends="YES" id="fgr-Xi-8r7"/>
@@ -351,7 +351,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Ve-BP-Acu" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <swipeGestureRecognizer direction="right" id="LBx-7h-PFf">
                     <connections>
-                        <action selector="dismissView:" destination="cWc-l7-msc" id="UQu-2u-g9r"/>
+                        <action selector="dismissView:" destination="cWc-l7-msc" id="Qmb-5H-W9T"/>
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
