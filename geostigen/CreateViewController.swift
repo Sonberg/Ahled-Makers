@@ -9,6 +9,7 @@
 import UIKit
 import Former
 import Photos
+import RKDropdownAlert
 
 
 class CreateViewController: FormViewController {
@@ -22,8 +23,12 @@ class CreateViewController: FormViewController {
     
     // MARK : - Actions
     func didTouchSave(_ sender : Any) {
-        self.route.save()
-        dismiss(animated: true, completion: nil)
+        if self.route.name.characters.count < 5 {
+            RKDropdownAlert.title("Titel behövs", message: "Du måste ha en title (minst 5 tecken)", backgroundColor: UIColor.red, textColor: UIColor.white, time: 5)
+        } else {
+            self.route.save()
+            dismiss(animated: true, completion: nil)
+        }
     }
     
     func didTouchDelete(_ sender : Any) {
