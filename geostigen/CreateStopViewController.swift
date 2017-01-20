@@ -11,6 +11,7 @@ import Former
 import MapKit
 import DynamicButton
 import CoreLocation
+import RKDropdownAlert
 
 class CreateStopViewController: FormViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate {
     
@@ -26,9 +27,16 @@ class CreateStopViewController: FormViewController, UIImagePickerControllerDeleg
     
     // MARK : - Actions
     func didTouchSave(_ sender : Any) {
-        self.stop.save(parentId: self.route.id)
-        self.route.updateCenter()
-        self.navigationController?.popViewController(animated: true)
+        if self.stop.name.characters.count < 5 {
+
+            RKDropdownAlert.title("Titel behövs", message: "Du måste ha en title (minst 5 tecken)", backgroundColor: UIColor.red, textColor: UIColor.white, time: 5)
+        } else if(self.stop.lat == Double(0) && self.stop.long == Double(0)) {
+            RKDropdownAlert.title("Plats behövs", message: "Du måste välja plats (Det gör du genom att trycka på kartan)", backgroundColor: UIColor.red, textColor: UIColor.white, time: 5)
+        } else {
+            self.stop.save(parentId: self.route.id)
+            self.route.updateCenter()
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     func didTouchDelete(_ sender : Any) {
