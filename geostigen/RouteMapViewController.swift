@@ -136,22 +136,32 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
             var stop = Stop(snap: snap)
             stop.number = self.route.stops.count + 1
             
+            if !CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) {
+                stop.isLocked = false
+            }
+            
+            if self.route.createdBy == self.user.id {
+                stop.isLocked = false
+            }
+            
             
                 if stop.lat != Double(0) && stop.long != Double(0) {
                     self.removeAnnotation(id: stop.id)
-                    self.addAnnotation(stop: stop)
+                    stop = self.addAnnotation(stop: stop)
                 } else {
                     stop.isLocked = false
                 }
             
             
-            if !self.route.stops.contains(where: { (s: Stop) -> Bool in
+            if let index = self.route.stops.index(where: { (s : Stop) -> Bool in
                 if s.id == stop.id {
                     return true
                 }
+                
                 return false
             }) {
-                print("appending")
+                self.route.stops[index] = stop
+            } else {
                 self.route.stops.append(stop)
             }
 
@@ -174,6 +184,7 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
         }
         
         ref?.queryOrderedByKey().observe(FIRDataEventType.childChanged) { (snap : FIRDataSnapshot) in
+            print("childChanged")
             var stop = Stop(snap: snap)
             for index in 0...(self.route.stops.count - 1) {
                 if self.route.stops[index].id == stop.id {
@@ -310,14 +321,18 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
     
     
     func stopTapped(sender : SpringImageView) {
+        print("tapped")
         for stop in self.route.stops {
             if stop.id == sender.accessibilityHint {
+                print(sender.accessibilityHint)
                 self.selectedStop = stop
                 if isEditingStops {
                     self.selectedStop = stop
                     self.performSegue(withIdentifier: "createStopSegue", sender: sender)
                 } else {
-                    if !stop.isLocked {
+                    print("trying to segue")
+                    if stop.isLocked == false {
+                        print("not locked")
                         self.performSegue(withIdentifier: "stopSegue", sender: sender)
                     }
                 }

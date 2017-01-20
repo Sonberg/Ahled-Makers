@@ -57,6 +57,9 @@ class StopViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupHeader()
+        automaticallyAdjustsScrollViewInsets = false
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.isScrollEnabled = true
@@ -66,25 +69,8 @@ class StopViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.estimatedRowHeight = 140
         tableView.setNeedsLayout()
         tableView.layoutIfNeeded()
-        tableView.frame.origin = CGPoint(x: 0, y: 64)
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.parallaxHeader.height = 0;
         
-        let headerView : UIImageView = UIImageView()
-        headerView.contentMode = .scaleAspectFill
-        headerView.isUserInteractionEnabled = true
-        headerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(StopViewController.didTapHeader(_:))))
-        
-        self.stop.getImage { (image : UIImage) in
-            headerView.image = image
-            self.tableView.parallaxHeader.view = headerView;
-            self.tableView.parallaxHeader.mode = .fill
-            self.tableView.parallaxHeader.minimumHeight = 0;
-            UIView.animate(withDuration: 0.3, animations: {
-                self.tableView.parallaxHeader.height = self.headerHeight;
-            })
-
-        }
         
         
         
@@ -106,6 +92,24 @@ class StopViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         ref?.removeAllObservers()
+    }
+    
+    func setupHeader() {
+        let headerView : UIImageView = UIImageView()
+        headerView.contentMode = .scaleAspectFill
+        headerView.isUserInteractionEnabled = true
+        headerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(StopViewController.didTapHeader(_:))))
+        
+        self.stop.getImage { (image : UIImage) in
+            headerView.image = image
+            self.tableView.parallaxHeader.view = headerView;
+            self.tableView.parallaxHeader.mode = .fill
+            self.tableView.parallaxHeader.minimumHeight = 0;
+            UIView.animate(withDuration: 0.3, animations: {
+                self.tableView.parallaxHeader.height = self.headerHeight;
+            })
+            
+        }
     }
 
     
@@ -141,7 +145,7 @@ class StopViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK : - Table View
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
+        tableView.contentInset = UIEdgeInsets(top: 64, left: 0, bottom: 50, right: 0)
         return 1 + self.posts.count
     }
     
@@ -194,7 +198,6 @@ class StopViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func keyboardWillShow(_ notification: NSNotification){
         let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
-        //self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: (keyboardSize?.height)! + self.messageInputContainerView.frame.size.height, right: 0)
          bottomConstraint?.constant = ((keyboardSize?.height)! * -1)
         
         UIView.animate(withDuration: 0, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
@@ -203,12 +206,15 @@ class StopViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func keyboardWillHide(_ notification: NSNotification){
-        //self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         bottomConstraint?.constant = 0
         
         UIView.animate(withDuration: 0, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
             self.view.layoutIfNeeded()
         })
+        
+        self.tableView.reloadData()
+        self.tableView.contentInset = UIEdgeInsets(top: self.headerHeight + 64, left: 0, bottom: 50, right: 0)
+        self.setupHeader()
     }
     
     
@@ -259,7 +265,6 @@ class StopViewController: UIViewController, UITableViewDelegate, UITableViewData
             post.created = String(describing: Date())
             post.save(routeId: self.route.id, stopId: self.stop.id)
             self.inputTextField.text = ""
-            self.tableView.reloadData()
         }
     }
     
