@@ -99,7 +99,7 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
     
     //MARK : - UI
     func updateUI() {
-        self.progressView.trackTintColor = Library.sharedInstance.colors[self.route.color].lighten(byPercentage: 0.6)
+        self.progressView.trackTintColor = Library.sharedInstance.colors[self.route.color].darken(byPercentage: 0.4)
         self.progressView.progressTintColor = Library.sharedInstance.colors[self.route.color]
         self.navigationItem.title = self.route.name
         
@@ -130,74 +130,59 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
     func syncFirebase() {
         
         self.ref = FIRDatabase.database().reference().child("routes").child(self.route.id).child("stops")
+        
+        
         ref?.queryOrderedByKey().observe(FIRDataEventType.childAdded) { (snap : FIRDataSnapshot) in
             var stop = Stop(snap: snap)
             stop.number = self.route.stops.count + 1
             
-            // Add If it doesnt exists
-            if self.mapView.annotations.contains(where: { (anno: MKAnnotation) -> Bool in
-                let lat : Double = anno.coordinate.latitude
-                let long : Double = anno.coordinate.longitude
-                if lat == stop.lat && long == stop.long {
-                    return true
-                }
-                return false
-            }) == false {
+            
                 if stop.lat != Double(0) && stop.long != Double(0) {
-                    let location = CLLocationCoordinate2DMake(stop.lat, stop.long)
-                    let annotation = MKPointAnnotation()
-                    let circleOverlay: MKCircle = MKCircle(center: location, radius: CLLocationDistance(self.regionRadius))
-                    
-                    
-                    annotation.coordinate = location;
-                    annotation.title = stop.name;
-                    
-                    if !CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) {
-                        stop.isLocked = false
-                    }
-                    
-                    self.mapView.addAnnotation(annotation)
-                    self.mapView.add(circleOverlay)
-                    
-                    if self.route.createdBy == self.user.id {
-                        stop.isLocked = false
-                    }
+                    self.removeAnnotation(id: stop.id)
+                    self.addAnnotation(stop: stop)
                 } else {
                     stop.isLocked = false
                 }
-            }
             
-                // Add If it doesnt exists
-                if self.route.stops.contains(where: { (s: Stop) -> Bool in
-                    if s.id == stop.id {
+            
+            if !self.route.stops.contains(where: { (s: Stop) -> Bool in
+                if s.id == stop.id {
                     return true
-                    }
-                    return false
-                }) == false {
-                    self.route.stops.append(stop)
                 }
+                return false
+            }) {
+                print("appending")
+                self.route.stops.append(stop)
+            }
+
             
-            if self.stops.contains(where: { (spring : SpringImageView) -> Bool in
+            if !self.stops.contains(where: { (spring : SpringImageView) -> Bool in
                 if (spring.accessibilityHint != nil) && spring.accessibilityHint! == stop.id {
                     return true
                 }
                 
                 return false
-            }) == false {
+            }) {
+                print("adding stops")
                 self.addStop(stop: stop)
             }
+            
             
             
                 self.locationManager.startUpdatingLocation()
 
         }
+        
         ref?.queryOrderedByKey().observe(FIRDataEventType.childChanged) { (snap : FIRDataSnapshot) in
-            let stop = Stop(snap: snap)
+            var stop = Stop(snap: snap)
             for index in 0...(self.route.stops.count - 1) {
                 if self.route.stops[index].id == stop.id {
                     self.route.stops[index] = stop
                 }
             }
+            
+            self.removeAnnotation(id: stop.id)
+            stop = self.addAnnotation(stop: stop)
         }
         ref?.queryOrderedByKey().observe(FIRDataEventType.childRemoved) { (snap : FIRDataSnapshot) in
             let stop = Stop(snap: snap)
@@ -329,11 +314,12 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
             if stop.id == sender.accessibilityHint {
                 self.selectedStop = stop
                 if isEditingStops {
-                     self.selectedStop = stop
-                    print("editing:" + stop.id)
+                    self.selectedStop = stop
                     self.performSegue(withIdentifier: "createStopSegue", sender: sender)
                 } else {
-                    self.performSegue(withIdentifier: "stopSegue", sender: sender)
+                    if !stop.isLocked {
+                        self.performSegue(withIdentifier: "stopSegue", sender: sender)
+                    }
                 }
             }
         }
@@ -348,35 +334,46 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
             offset = 1
         } 
         
-        let index = self.stops.count
-        let image = SpringImageView(frame: CGRect(x: 80 * index, y: 0, width: 60, height: 60))
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(RouteMapViewController.stopTapped(sender:)))
-        tapGesture.accessibilityHint = stop.id
-         if stop.isLocked && self.user.id != self.route.createdBy && stop.visitedBy.index(of: self.user.id) == nil {
-            image.setImageWith(String.fontAwesomeIcon(.lock), color: Library.sharedInstance.colors[self.route.color], circular: true, textAttributes: [ NSFontAttributeName: UIFont.fontAwesome(ofSize: 30), NSForegroundColorAttributeName: UIColor.white ])
-         } else {
-            let update = self.route.stops.index(where: { (new : Stop) -> Bool in
-                if new.id == stop.id {
-                    return true
-                }
-                return false
-            })
-            self.route.stops[update!].isLocked = false
+        print(self.route.stops.count)
+        var index = self.route.stops.index { (s : Stop) -> Bool in
+            if s.id == stop.id {
+                return true
+            }
             
-            image.setImageWith(String(index), color: Library.sharedInstance.colors[self.route.color], circular: true)
+            return false
         }
         
-        image.accessibilityHint = stop.id
-        image.isUserInteractionEnabled = true
-        image.addGestureRecognizer(tapGesture)
-
-        self.scrollView.addSubview(image)
-        self.stops.append(image)
-        
-        let width = 80 * (index + offset)
-        let leftInset : CGFloat = CGFloat(Int(self.view.bounds.width) / 2 - width / 2)
-        self.scrollView.contentInset = UIEdgeInsets(top: 0, left: leftInset, bottom: 0, right: 0)
-        self.updateProgress()
+        if (index != nil) {
+            index = index! + 1
+            let image = SpringImageView(frame: CGRect(x: 80 * index!, y: 0, width: 60, height: 60))
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(RouteMapViewController.stopTapped(sender:)))
+            tapGesture.accessibilityHint = stop.id
+            if stop.isLocked && self.user.id != self.route.createdBy && stop.visitedBy.index(of: self.user.id) == nil {
+                image.setImageWith(String.fontAwesomeIcon(.lock), color: Library.sharedInstance.colors[self.route.color], circular: true, textAttributes: [ NSFontAttributeName: UIFont.fontAwesome(ofSize: 30), NSForegroundColorAttributeName: UIColor.white ])
+            } else {
+                let update = self.route.stops.index(where: { (new : Stop) -> Bool in
+                    if new.id == stop.id {
+                        return true
+                    }
+                    return false
+                })
+                self.route.stops[update!].isLocked = false
+                print(String(describing: index!))
+                image.setImageWith(String(describing: index!), color: Library.sharedInstance.colors[self.route.color], circular: true)
+            }
+            
+            image.accessibilityHint = stop.id
+            image.isUserInteractionEnabled = true
+            image.addGestureRecognizer(tapGesture)
+            
+            self.scrollView.addSubview(image)
+            self.stops.append(image)
+            
+            let width = 80 * (index! + offset)
+            let leftInset : CGFloat = CGFloat(Int(self.view.bounds.width) / 2 - width / 2)
+            self.scrollView.contentInset = UIEdgeInsets(top: 0, left: leftInset, bottom: 0, right: 0)
+            self.updateProgress()
+        }
     }
     
     
@@ -420,7 +417,6 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if locations.last != nil {
             print("have location")
-            print(self.route.stops)
             mapView.showAnnotations(self.mapView.annotations, animated: false)
             for annotation in self.mapView.annotations {
                 if annotation is MKUserLocation {} else {
@@ -430,7 +426,7 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
                             for index : Int in 0...(self.route.stops.count - 1)  {
                                 let stop = self.route.stops[index]
                                 //&& stop.isLocked
-                                if stop.name == annotation.title! && stop.isLocked {
+                                if stop.name == annotation.title! {
                                     self.route.stops[index].isNew = true
                                     self.selectedStop = stop
                                     userDidEnterRegionFor(index: index)
@@ -439,12 +435,56 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
                         }
                     }
                 }
-                
             }
         }
     }
     
     // MARK : - Map View
+    func addAnnotation(stop : Stop) -> Stop {
+        var stop = stop
+        let location = CLLocationCoordinate2DMake(stop.lat, stop.long)
+        let annotation = MKPointAnnotation()
+        let overlay: MKCircle = MKCircle(center: location, radius: CLLocationDistance(self.regionRadius))
+        
+        
+        annotation.coordinate = location
+        annotation.title = stop.name
+        annotation.accessibilityHint = stop.id
+        overlay.accessibilityHint = stop.id
+        
+        if !CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) {
+            stop.isLocked = false
+        }
+        
+        self.mapView.addAnnotation(annotation)
+        self.mapView.add(overlay)
+        
+        if self.route.createdBy == self.user.id {
+            stop.isLocked = false
+        }
+        
+        return stop
+    }
+    
+    func removeAnnotation(id : String) {
+        for annotaion in self.mapView.annotations {
+            if annotaion is MKPointAnnotation {
+                if (annotaion as! MKPointAnnotation).accessibilityHint == id {
+                    self.mapView.removeAnnotation(annotaion)
+                }
+            }
+        }
+        
+        
+        for overlay in self.mapView.overlays {
+            if overlay is MKCircle {
+                if (overlay as! MKCircle).accessibilityHint == id {
+                    self.mapView.remove(overlay)
+                }
+            }
+        }
+    }
+    
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let circleView = MKCircleRenderer(overlay: overlay)
         circleView.strokeColor = UIColor.clear

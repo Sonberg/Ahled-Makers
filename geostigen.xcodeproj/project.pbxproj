@@ -20,6 +20,7 @@
 		8975E34E1E23DD62007B1E2F /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8975E34D1E23DD62007B1E2F /* SignupViewController.swift */; };
 		8975E3501E23DF02007B1E2F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8975E34F1E23DF02007B1E2F /* User.swift */; };
 		8975E3521E23E132007B1E2F /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8975E3511E23E132007B1E2F /* Enum.swift */; };
+		897C50051E30C4A2009F1494 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 897C50041E30C4A2009F1494 /* MapKit.framework */; };
 		89A639841E1E546300A6CF8A /* Route.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 89A639821E1E546300A6CF8A /* Route.storyboard */; };
 		89A639861E1E56C700A6CF8A /* CreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A639851E1E56C700A6CF8A /* CreateViewController.swift */; };
 		89A639881E1E597A00A6CF8A /* ColorListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89A639871E1E597A00A6CF8A /* ColorListCell.swift */; };
@@ -67,6 +68,7 @@
 		8975E34D1E23DD62007B1E2F /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		8975E34F1E23DF02007B1E2F /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		8975E3511E23E132007B1E2F /* Enum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
+		897C50041E30C4A2009F1494 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		89A639831E1E546300A6CF8A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Route.storyboard; sourceTree = "<group>"; };
 		89A639851E1E56C700A6CF8A /* CreateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateViewController.swift; sourceTree = "<group>"; };
 		89A639871E1E597A00A6CF8A /* ColorListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorListCell.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				897C50051E30C4A2009F1494 /* MapKit.framework in Frameworks */,
 				DFBE99982A3C806231969A22 /* Pods_geostigen.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -111,6 +114,7 @@
 		4D7ECBD5EC10BCAF115149C7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				897C50041E30C4A2009F1494 /* MapKit.framework */,
 				1BD9FD4D4DC47985FFE01E7F /* Pods_geostigen.framework */,
 			);
 			name = Frameworks;
@@ -281,9 +285,14 @@
 				TargetAttributes = {
 					89303B041E0D437300FFDF38 = {
 						CreatedOnToolsVersion = 8.2;
-						DevelopmentTeam = K4643C7U42;
+						DevelopmentTeam = 83YLUPW875;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -539,7 +548,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = K4643C7U42;
+				DEVELOPMENT_TEAM = 83YLUPW875;
 				INFOPLIST_FILE = geostigen/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -555,7 +564,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = K4643C7U42;
+				DEVELOPMENT_TEAM = 83YLUPW875;
 				INFOPLIST_FILE = geostigen/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

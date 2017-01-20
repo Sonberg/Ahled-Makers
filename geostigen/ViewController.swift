@@ -63,6 +63,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         setupLocation()
         self.addBarButton.tintColor = .clear
         self.addBarButton.isEnabled = false
+        self.navigationItem.title = "Geostigen"
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -73,6 +74,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.hideSpinner()
         locationManager.startUpdatingLocation()
         returnUserRef { (user : User) in
             self.user = user
