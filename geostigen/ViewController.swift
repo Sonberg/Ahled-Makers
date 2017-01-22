@@ -46,7 +46,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var routes : [Route] = []
     var mine : [Route] = []
     let transition = BubbleTransition()
-    var floatingActionButton = DynamicButton(style: DynamicButtonStyle.verticalMoreOptions)
+    var floatingActionButton = UIButton()
     
     deinit {
         print("View controller hade been deinit")
@@ -193,15 +193,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.floatingActionButton.frame = CGRect(x: self.screen.width - 120, y: self.screen.height - 120, width: 80, height: 80)
         self.floatingActionButton.layer.cornerRadius = 80/2
         self.floatingActionButton.backgroundColor = UIColor.groupTableViewBackground
-        self.floatingActionButton.strokeColor = UIColor.gray
-        self.floatingActionButton.lineWidth = 3
+        self.floatingActionButton.setImage(UIImage.fontAwesomeIcon(.lineChart, textColor: UIColor.darkGray, size: CGSize(width: 24, height: 30)), for: .normal)
         self.floatingActionButton.layer.borderColor = UIColor.groupTableViewBackground.darken(byPercentage: 0.2)?.cgColor
         self.floatingActionButton.layer.borderWidth = 0.5
         self.floatingActionButton.layer.shadowColor = UIColor.lightGray.cgColor
         self.floatingActionButton.layer.shadowOffset = CGSize(width: 0, height: 0)
         self.floatingActionButton.layer.shadowRadius = 0.4
         self.floatingActionButton.layer.shadowOpacity = 1.0
-        self.floatingActionButton.contentEdgeInsets = UIEdgeInsets(top: 30, left: 20, bottom: 30, right: 20)
+        self.floatingActionButton.contentEdgeInsets = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
         self.floatingActionButton.addTarget(self, action: #selector(didTouchActionFloatingButton(sender:)), for: .touchUpInside)
         self.view.addSubview(self.floatingActionButton)
     }

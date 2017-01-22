@@ -131,7 +131,7 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 cell.badgeColor = Library.sharedInstance.colors[self.route.color]
                 if stop.visitedBy.count > 0 {
                     cell.badgeFont = UIFont.fontAwesome(ofSize: cell.badgeFont.pointSize)
-                    cell.badgeString = String.fontAwesomeIcon(.chevronDown)
+                    cell.badgeString = String(stop.visitedBy.count) + " - " + String.fontAwesomeIcon(.chevronDown)
                     
                 } else {
                     cell.badgeString = String(stop.visitedBy.count)
@@ -180,15 +180,14 @@ class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     print("collaps")
                     stop.visitors?.collapse(previouslySelectedHeaderIndex)
                     cell.badgeFont = UIFont.fontAwesome(ofSize: cell.badgeFont.pointSize)
-                    cell.badgeString = String.fontAwesomeIcon(.chevronDown)
+                    cell.badgeString = String(stop.visitedBy.count) + " - " + String.fontAwesomeIcon(.chevronDown)
                 }
                 
                 if self.previouslySelectedHeaderIndex != self.selectedHeaderIndex {
                     print("expand")
-                    print(self.selectedHeaderIndex!)
                     stop.visitors?.expand(self.selectedHeaderIndex!)
                     cell.badgeFont = UIFont.fontAwesome(ofSize: cell.badgeFont.pointSize)
-                    cell.badgeString = String.fontAwesomeIcon(.chevronUp)
+                    cell.badgeString = String(stop.visitedBy.count) + " - " + String.fontAwesomeIcon(.chevronUp)
                 } else {
                     self.selectedHeaderIndex = nil
                     self.previouslySelectedHeaderIndex = nil
