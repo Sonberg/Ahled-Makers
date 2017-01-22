@@ -102,6 +102,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/TransitionAnimation/TransitionAnimation.framework"
   install_framework "$BUILT_PRODUCTS_DIR/TransitionTreasury/TransitionTreasury.framework"
   install_framework "$BUILT_PRODUCTS_DIR/UIImageView-Letters/UIImageView_Letters.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/UITableViewCell-Badge/UITableViewCell_Badge.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/BadgeSwift/BadgeSwift.framework"
@@ -122,4 +123,5 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/TransitionAnimation/TransitionAnimation.framework"
   install_framework "$BUILT_PRODUCTS_DIR/TransitionTreasury/TransitionTreasury.framework"
   install_framework "$BUILT_PRODUCTS_DIR/UIImageView-Letters/UIImageView_Letters.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/UITableViewCell-Badge/UITableViewCell_Badge.framework"
 fi

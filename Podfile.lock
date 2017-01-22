@@ -63,6 +63,7 @@ PODS:
     - TransitionTreasury (~> 3.1)
   - TransitionTreasury (3.1.0)
   - UIImageView-Letters (1.1.4)
+  - UITableViewCell-Badge (1.0)
 
 DEPENDENCIES:
   - BadgeSwift (~> 4.0)
@@ -85,6 +86,7 @@ DEPENDENCIES:
   - TransitionAnimation (~> 3.1.0)
   - TransitionTreasury (~> 3.1.0)
   - UIImageView-Letters
+  - UITableViewCell-Badge
 
 EXTERNAL SOURCES:
   ChameleonFramework:
@@ -129,7 +131,8 @@ SPEC CHECKSUMS:
   TransitionAnimation: 251fdfacdf1685b425b85355bf7ab50ce1a1bec0
   TransitionTreasury: d2e901181a157719d4b275638a40ca2d794bc601
   UIImageView-Letters: f62db28076797adf3560ab7410647dc6899b9eef
+  UITableViewCell-Badge: db55cad2d53d43dd3e66e656b1f6612cb1d7138d
 
-PODFILE CHECKSUM: 76dadbc791c28106c4612fcede133381740a6658
+PODFILE CHECKSUM: 1c179d27b3f80a4d3cbcefc7acfb120e3d45a626
 
 COCOAPODS: 1.1.1

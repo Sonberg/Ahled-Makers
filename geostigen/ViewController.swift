@@ -11,37 +11,42 @@ import Firebase
 import Presentr
 import FirebaseAuth
 import CoreLocation
+import BubbleTransition
 import FirebaseDatabase
 import DynamicButton
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, UIViewControllerTransitioningDelegate {
     
     // MARK: - Outlets
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addBarButton: UIBarButtonItem!
+    @IBOutlet weak var profileButton: UIBarButtonItem!
     
     // MARK : - Actions
-    @IBAction func didTouchLogout(_ sender: Any) {
-        let firebaseAuth = FIRAuth.auth()
-        do {
-            try firebaseAuth?.signOut()
-            self.performSegue(withIdentifier: "logoutSegue", sender: self)
-        } catch let signOutError as NSError {
-            print ("Error signing out: \(signOutError.localizedDescription)")
-        }
+    @IBAction func didTouchProfile(_ sender: Any) {
+        let mainStoryboard: UIStoryboard = UIStoryboard(name: "User", bundle: nil)
+        let destinationViewController = mainStoryboard.instantiateViewController(withIdentifier: "SideMenuNavigationController") as! RouteNavigationViewController
+        let vc = destinationViewController.viewControllers.first as! UserViewController
+        vc.user = self.user
+        customPresentViewController(self.presenter(), viewController: destinationViewController, animated: true, completion: nil)
     }
+    
+    
     
     @IBAction func didTouchAdd(_ sender: Any) {
         self.showRoute(route: Route())
     }
     
     // MARK: - Variables
+    let screen = UIScreen.main.bounds
     var ref : FIRDatabaseReference?
     var user : User!
     var locationManager : CLLocationManager!
     var location : CLLocation! = nil
     var routes : [Route] = []
     var mine : [Route] = []
+    let transition = BubbleTransition()
+    var floatingActionButton = DynamicButton(style: DynamicButtonStyle.verticalMoreOptions)
     
     deinit {
         print("View controller hade been deinit")
@@ -61,6 +66,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.layoutIfNeeded()
         tableView.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0)
         setupLocation()
+        self.profileButton.title = ""
         self.addBarButton.tintColor = .clear
         self.addBarButton.isEnabled = false
         self.navigationItem.title = "Geostigen"
@@ -76,11 +82,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.viewDidAppear(animated)
         self.hideSpinner()
         locationManager.startUpdatingLocation()
+        
+        // MARK : - Get user
         returnUserRef { (user : User) in
             self.user = user
-            
+            self.profileButton.title = user.firstName + " " + user.lastName
             self.syncFirebase()
+            
             if user.type == .admin {
+                self.setupActionFloatingButton()
                 self.addBarButton.tintColor = .black
                 self.addBarButton.isEnabled = true
             }
@@ -172,6 +182,34 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
+    
+    // MARK : - Floating Action Button
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        self.floatingActionButton.frame = CGRect(x: size.width - 120, y: size.height - 120, width: 80, height: 80)
+    }
+    
+    func setupActionFloatingButton() {
+        self.floatingActionButton.frame = CGRect(x: self.screen.width - 120, y: self.screen.height - 120, width: 80, height: 80)
+        self.floatingActionButton.layer.cornerRadius = 80/2
+        self.floatingActionButton.backgroundColor = UIColor.groupTableViewBackground
+        self.floatingActionButton.strokeColor = UIColor.gray
+        self.floatingActionButton.lineWidth = 3
+        self.floatingActionButton.layer.borderColor = UIColor.groupTableViewBackground.darken(byPercentage: 0.2)?.cgColor
+        self.floatingActionButton.layer.borderWidth = 0.5
+        self.floatingActionButton.layer.shadowColor = UIColor.lightGray.cgColor
+        self.floatingActionButton.layer.shadowOffset = CGSize(width: 0, height: 0)
+        self.floatingActionButton.layer.shadowRadius = 0.4
+        self.floatingActionButton.layer.shadowOpacity = 1.0
+        self.floatingActionButton.contentEdgeInsets = UIEdgeInsets(top: 30, left: 20, bottom: 30, right: 20)
+        self.floatingActionButton.addTarget(self, action: #selector(didTouchActionFloatingButton(sender:)), for: .touchUpInside)
+        self.view.addSubview(self.floatingActionButton)
+    }
+    
+    func didTouchActionFloatingButton(sender : AnyObject) {
+        self.performSegue(withIdentifier: "inboxSegue", sender: self)
+    }
+    
     // MARK : - Location
     func setupLocation() {
         locationManager = CLLocationManager()
@@ -197,7 +235,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
             self.performSegue(withIdentifier: "RouteMapSegue", sender: self)
         } else {
-            self.showRoute(route: self.routes[indexPath.row])
+            self.showRoute(route: self.mine[indexPath.row])
             self.tableView.deselectRow(at: indexPath, animated: true)
         }
     }
@@ -213,15 +251,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         return 0
     }
-    /*
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
-            return "Stigar i närheten"
-        }
-        
-        return "Mina stigar"
-    }
- */
     
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -307,9 +336,29 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
             
             self.tableView.deselectRow(at: indexPath!, animated: true)
-
-    
         }
+        
+        if segue.identifier == "inboxSegue" {
+            let controller = segue.destination as! SplitViewController
+            controller.transitioningDelegate = self
+            controller.modalPresentationStyle = .custom
+        }
+    }
+    
+    // MARK: UIViewControllerTransitioningDelegate
+    
+    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transition.transitionMode = .present
+        transition.startingPoint = self.floatingActionButton.center
+        transition.bubbleColor = self.floatingActionButton.backgroundColor!
+        return transition
+    }
+    
+    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transition.transitionMode = .dismiss
+        transition.startingPoint = self.floatingActionButton.center
+        transition.bubbleColor = self.floatingActionButton.backgroundColor!
+        return transition
     }
     
 }

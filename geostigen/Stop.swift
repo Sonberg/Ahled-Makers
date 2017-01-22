@@ -9,6 +9,7 @@
 import UIKit
 import Foundation
 import FirebaseStorage
+import RKDropdownAlert
 import FirebaseDatabase
 
 struct Stop {
@@ -53,8 +54,9 @@ struct Stop {
     var long : Double = Double(0)
     var posts : [Post] = []
     var visitedBy : [String] = []
+    var visitors : SwiftyAccordionCells?
     
-    var isNew : Bool = false
+    var isNew : Bool = true
     var isLocked : Bool = true
     var image : UIImage? = nil
     var color : String = ""
@@ -128,6 +130,7 @@ struct Stop {
                 }
             }
         }
+        RKDropdownAlert.title("Sparat!", backgroundColor: UIColor.flatGreen, textColor: UIColor.init(contrastingBlackOrWhiteColorOn: UIColor.flatGreen, isFlat: true), time: 5)
         
     }
     

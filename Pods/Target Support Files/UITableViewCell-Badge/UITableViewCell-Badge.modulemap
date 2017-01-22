@@ -1,0 +1,6 @@
+framework module UITableViewCell_Badge {
+  umbrella header "UITableViewCell-Badge-umbrella.h"
+
+  export *
+  module * { export * }
+}

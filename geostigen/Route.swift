@@ -10,6 +10,7 @@ import UIKit
 import MapKit
 import Foundation
 import FirebaseDatabase
+import RKDropdownAlert
 
 class Route {
     
@@ -103,8 +104,7 @@ class Route {
         } else {
             ref.setValue(data)
         }
-        
-        
+        RKDropdownAlert.title("Sparat!", backgroundColor: UIColor.flatGreen, textColor: UIColor.init(contrastingBlackOrWhiteColorOn: UIColor.flatGreen, isFlat: true), time: 5)
     }
     
     func delete() {

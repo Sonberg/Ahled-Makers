@@ -59,18 +59,20 @@ class CreateViewController: FormViewController {
         
         
         let titleRow = TextFieldRowFormer<FormTextFieldCell>() {
-            $0.titleLabel.text = self.route.name
+            $0.textField.text = self.route.name
             }.configure {
                 $0.placeholder = "Vad ska stigen heta?"
+                $0.text = self.route.name
             }.onTextChanged { (text : String) in
             self.navigationItem.title = text
             self.route.name = text
         }
         
         let descRow = TextViewRowFormer<FormTextViewCell> {
-            $0.titleLabel.text = self.route.desc
+            $0.textView.text = self.route.desc
             }.configure {
                 $0.placeholder = "Beskriv stigen"
+                $0.text = self.route.desc
             }.onTextChanged { (text : String) in
             self.route.desc = text
         }

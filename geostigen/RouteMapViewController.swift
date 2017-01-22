@@ -99,7 +99,8 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
     
     //MARK : - UI
     func updateUI() {
-        self.progressView.trackTintColor = Library.sharedInstance.colors[self.route.color].darken(byPercentage: 0.4)
+        self.progressView.progress = 0
+        self.progressView.trackTintColor = Library.sharedInstance.colors[self.route.color].withAlphaComponent(0.2)
         self.progressView.progressTintColor = Library.sharedInstance.colors[self.route.color]
         self.navigationItem.title = self.route.name
         
@@ -135,22 +136,14 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
         ref?.queryOrderedByKey().observe(FIRDataEventType.childAdded) { (snap : FIRDataSnapshot) in
             var stop = Stop(snap: snap)
             stop.number = self.route.stops.count + 1
+
             
-            if !CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) {
+            if stop.lat != Double(0) && stop.long != Double(0) {
+                self.removeAnnotation(id: stop.id)
+                stop = self.addAnnotation(stop: stop)
+            } else {
                 stop.isLocked = false
             }
-            
-            if self.route.createdBy == self.user.id {
-                stop.isLocked = false
-            }
-            
-            
-                if stop.lat != Double(0) && stop.long != Double(0) {
-                    self.removeAnnotation(id: stop.id)
-                    stop = self.addAnnotation(stop: stop)
-                } else {
-                    stop.isLocked = false
-                }
             
             
             if let index = self.route.stops.index(where: { (s : Stop) -> Bool in
@@ -160,6 +153,9 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
                 
                 return false
             }) {
+                stop.isNew = self.route.stops[index].isNew
+                stop.isLocked = self.route.stops[index].isLocked
+                print(self.route.stops[index])
                 self.route.stops[index] = stop
             } else {
                 self.route.stops.append(stop)
@@ -173,7 +169,6 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
                 
                 return false
             }) {
-                print("adding stops")
                 self.addStop(stop: stop)
             }
             
@@ -188,6 +183,8 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
             var stop = Stop(snap: snap)
             for index in 0...(self.route.stops.count - 1) {
                 if self.route.stops[index].id == stop.id {
+                    stop.isNew = self.route.stops[index].isNew
+                    stop.isLocked = self.route.stops[index].isLocked
                     self.route.stops[index] = stop
                 }
             }
@@ -267,25 +264,40 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
     
     func userDidEnterRegionFor(index: Int) {
         print("In position")
-        let stop = self.route.stops[index]
-        self.selectedStop = stop
+
+        self.selectedStop = self.route.stops[index]
         self.route.stops[index].isLocked = false
+        
+        // MARK : - Track visitors
         if self.route.createdBy != self.user.id && self.route.stops[index].visitedBy.index(of: self.user.id) == nil {
-            self.route.stops[index].visitedBy.append(self.user.id)
+            
+            if !self.route.stops[index].visitedBy.contains(self.user.id) {
+                self.route.stops[index].visitedBy.append(self.user.id)
+            }
+            
             self.route.stops[index].save(parentId: self.route.id)
         }
+        
+        // MARK : - Unlocking
+        if self.selectedStop.isNew {
+            if self.route.stops[index].name.characters.count > 0 && self.route.stops[index].isNew == true {
+                self.route.stops[index].isNew = false
+                self.performSegue(withIdentifier: "unlockSegue", sender: self)
+            }
+            
+        }
+        
+        // MARK : - Find circle view
         for i in 0...(self.scrollView.subviews.count - 1) {
-            if self.scrollView.subviews[i].accessibilityHint == stop.id {
+            if self.scrollView.subviews[i].accessibilityHint == self.selectedStop.id {
                 let view = self.scrollView.subviews[i] as! SpringImageView
                 let when = DispatchTime.now() + 1
                 DispatchQueue.main.asyncAfter(deadline: when) {
+                    
+                    // MARK : - Animate Unlock
                     view.setImageWith(String(index + 1), color: Library.sharedInstance.colors[self.route.color], circular: true)
                     view.animation = "pop"
                     view.animate()
-                    if stop.isNew {
-                        print("adding badge")
-                    }
-                    self.performSegue(withIdentifier: "unlockSegue", sender: self)
                     
                 }
             }
@@ -293,6 +305,7 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
     }
     
     func initStops() {
+        // MARK : - Add append button
         if self.user.id == self.route.createdBy && self.user.type == .admin {
             self.appendButton = SpringImageView(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(RouteMapViewController.stopTapped(sender:)))
@@ -319,9 +332,8 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
         }
     }
     
-    
+    // MARK : - Handle tap
     func stopTapped(sender : SpringImageView) {
-        print("tapped")
         for stop in self.route.stops {
             if stop.id == sender.accessibilityHint {
                 print(sender.accessibilityHint)
@@ -343,11 +355,14 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
         }
     }
     
+    // MARK : - Append stop
     func addStop(stop : Stop) {
         var offset = 0
         if self.user.type == .admin && self.user.id == self.route.createdBy {
             offset = 1
-        } 
+        }
+        
+        print(offset)
         
         print(self.route.stops.count)
         var index = self.route.stops.index { (s : Stop) -> Bool in
@@ -430,20 +445,24 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        // MARK : - Have position?
         if locations.last != nil {
-            print("have location")
+            
+            // MARK : - Show all on map
             mapView.showAnnotations(self.mapView.annotations, animated: false)
             for annotation in self.mapView.annotations {
+                
+                // MARK : - Check if annotation is in position
                 if annotation is MKUserLocation {} else {
                     let dis = locations.last?.distance(from: CLLocation(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude))
                     if Int(dis as Double!) < self.regionRadius {
+                        
+                        // MARK : - Find stop connected to annotation
                         if self.route.stops.count > 0 {
                             for index : Int in 0...(self.route.stops.count - 1)  {
-                                let stop = self.route.stops[index]
-                                //&& stop.isLocked
-                                if stop.name == annotation.title! {
-                                    self.route.stops[index].isNew = true
-                                    self.selectedStop = stop
+                                if self.route.stops[index].name == annotation.title! {
+                                    // MARK : - Unlock
                                     userDidEnterRegionFor(index: index)
                                 }
                             }
@@ -533,7 +552,6 @@ class RouteMapViewController: UIViewController, MKMapViewDelegate, ModalTransiti
             controller.stop = self.selectedStop
             controller.transitioningDelegate = self
             controller.modalPresentationStyle = .custom
-        
         }
         
         self.selectedStop = Stop()

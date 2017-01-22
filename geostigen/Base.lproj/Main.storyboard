@@ -177,10 +177,10 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="UM7-wk-6Sd">
-                        <barButtonItem key="leftBarButtonItem" title="Logga ut" id="IE7-te-yzS">
+                        <barButtonItem key="leftBarButtonItem" title="Profile" id="IE7-te-yzS">
                             <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <action selector="didTouchLogout:" destination="BYZ-38-t0r" id="1bq-n0-4ev"/>
+                                <action selector="didTouchProfile:" destination="BYZ-38-t0r" id="v7z-p5-Ggs"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="MBv-5M-rgq">
@@ -192,9 +192,11 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addBarButton" destination="MBv-5M-rgq" id="DP4-qe-Zsx"/>
+                        <outlet property="profileButton" destination="IE7-te-yzS" id="NGr-OS-xXL"/>
                         <outlet property="tableView" destination="qP8-nH-Ute" id="dIp-jx-Kcd"/>
                         <segue destination="jb0-7P-tbg" kind="presentation" identifier="logoutSegue" modalTransitionStyle="crossDissolve" id="6Bt-qs-Uhg"/>
                         <segue destination="8DF-KD-7es" kind="show" identifier="RouteMapSegue" id="62W-yO-Lg1"/>
+                        <segue destination="1h8-Dx-LLH" kind="presentation" identifier="inboxSegue" id="W6Y-Qa-wi7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -205,7 +207,7 @@
         <scene sceneID="byL-a0-RLo">
             <objects>
                 <navigationController storyboardIdentifier="SideMenuNavigationController" id="tFL-VZ-Lk0" customClass="RouteNavigationViewController" customModule="geostigen" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="pne-km-qHt">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="pne-km-qHt">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -254,7 +256,7 @@
             <objects>
                 <navigationController storyboardIdentifier="mainNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="m4z-Zh-SUM" customClass="RouteNavigationViewController" customModule="geostigen" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="nA1-7W-90G">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="nA1-7W-90G">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -274,6 +276,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3AR-CU-eDH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="971" y="533"/>
+        </scene>
+        <!--InboxController-->
+        <scene sceneID="F60-Vi-g2J">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Inbox" referencedIdentifier="InboxController" id="1h8-Dx-LLH" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4wh-af-Hmk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1124" y="533"/>
         </scene>
     </scenes>
 </document>

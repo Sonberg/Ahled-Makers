@@ -27,5 +27,6 @@ pod 'FontAwesome.swift'
 pod "CZPicker"
 pod 'BubbleTransition', '~> 2.0.0'
 pod 'SVProgressHUD'
+pod 'UITableViewCell-Badge'
 	
 end
